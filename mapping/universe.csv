@@ -1,0 +1,236 @@
+ticker,status,is_delisted,is_stablecoin,chain_id,chain_name,asset_role,standard,multiplier,underlying,confidence,sources,notes
+BTC,mapped,False,False,bitcoin,Bitcoin,native,,,,high,https://bitcoin.org,Native asset of Bitcoin.
+ETH,mapped,False,False,ethereum,Ethereum,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of Ethereum. Kraken also lists bridged representations; the home chain is Ethereum.
+ATOM,mapped,False,False,cosmoshub,Cosmos Hub,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of Cosmos Hub.
+MATIC,mapped,True,False,polygon,Polygon PoS,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Delisted legacy ticker for the Polygon gas asset before POL.
+DYDX,mapped,False,False,dydx,dYdX Chain,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of dYdX Chain after the Ethereum migration.
+SOL,mapped,False,False,solana,Solana,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of Solana.
+AVAX,mapped,False,False,avalanche,Avalanche C-Chain,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of Avalanche. Activity collected on the C-Chain.
+BNB,mapped,False,False,bnb,BNB Smart Chain,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of BNB Smart Chain.
+APE,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,ApeCoin ERC-20.
+OP,mapped,False,False,optimism,Optimism,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,OP is the governance token. ETH is gas.
+LTC,mapped,False,False,litecoin,Litecoin,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of Litecoin.
+ARB,mapped,False,False,arbitrum,Arbitrum One,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,ARB is the governance token on Arbitrum One. ETH is gas.
+DOGE,mapped,False,False,dogecoin,Dogecoin,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of Dogecoin.
+INJ,mapped,False,False,injective,Injective,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of Injective.
+SUI,mapped,False,False,sui,Sui,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of Sui.
+kPEPE,mapped,False,False,ethereum,Ethereum,hosted,erc20,1000,PEPE,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,k-prefix is 1000 units of the underlying. PEPE is an Ethereum ERC-20.
+CRV,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+LDO,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+LINK,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Canonical Chainlink token is the Ethereum ERC-20.
+STX,mapped,False,False,stacks,Stacks,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of Stacks.
+RNDR,mapped,True,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Delisted pre-migration Render token.
+CFX,mapped,False,False,conflux,Conflux,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of Conflux.
+FTM,mapped,True,False,fantom,Fantom Opera,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,"Delisted. Native asset of Fantom Opera, not the successor S token."
+GMX,mapped,False,False,arbitrum,Arbitrum One,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Canonical GMX token is on Arbitrum. A bridged Avalanche copy exists.
+SNX,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+XRP,mapped,False,False,xrpl,XRP Ledger,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of the XRP Ledger.
+BCH,mapped,False,False,bitcoincash,Bitcoin Cash,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of Bitcoin Cash.
+APT,mapped,False,False,aptos,Aptos,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of Aptos.
+AAVE,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+COMP,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+MKR,mapped,True,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,"Delisted. Maker governance token, later rebranded toward SKY."
+WLD,mapped,False,False,optimism,Optimism,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+FXS,mapped,True,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,"Delisted. Frax Share, not the FRAX stablecoin."
+HPOS,mapped,True,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Delisted. HarryPotterObamaSonic10Inu ERC-20.
+RLB,mapped,True,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Delisted. Rollbit coin ERC-20.
+UNIBOT,mapped,True,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Delisted.
+YGG,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+TRX,mapped,False,False,tron,Tron,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of Tron.
+kSHIB,mapped,False,False,ethereum,Ethereum,hosted,erc20,1000,SHIB,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,k-prefix is 1000 units of the underlying. SHIB is an Ethereum ERC-20.
+UNI,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+SEI,mapped,False,False,sei,Sei,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native gas asset of Sei.
+RUNE,mapped,False,False,thorchain,THORChain,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of THORChain.
+OX,unmapped,True,False,,,,,,,,,Delisted. Home chain was not confirmed.
+FRIEND,mapped,True,False,base,Base,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Delisted. friend.tech FRIEND token on Base.
+SHIA,unmapped,True,False,,,,,,,,,Delisted. Home chain was not confirmed.
+CYBER,mapped,True,False,optimism,Optimism,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Delisted. Kraken lists Optimism.
+ZRO,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Kraken lists only Ethereum. OFT copies exist on other chains; Ethereum is the deposit home used here.
+BLZ,mapped,True,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Delisted.
+DOT,mapped,False,False,polkadot,Polkadot,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of Polkadot. Kraken lists Asset Hub as the deposit location for the same native asset.
+BANANA,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,"Banana Gun. The HL mid matches that market, not BANANAS31."
+TRB,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Tellor.
+FTT,mapped,True,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Delisted. Original FTT is the Ethereum ERC-20.
+LOOM,mapped,True,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Delisted.
+OGN,mapped,True,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Delisted.
+RDNT,mapped,True,False,arbitrum,Arbitrum One,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Delisted. Radiant Capital.
+ARK,unmapped,True,False,,,,,,,,,Delisted. Ticker collides across several assets; the Hyperliquid market was not tied to one chain.
+BNT,mapped,True,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Delisted.
+CANTO,mapped,True,False,canto,Canto,native,,,,high,https://canto.io,Delisted. Native asset of Canto.
+REQ,mapped,True,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Delisted.
+BIGTIME,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+KAS,mapped,False,False,kaspa,Kaspa,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of Kaspa. Not a k-prefix contract.
+ORBS,mapped,True,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Delisted. The traded token is an Ethereum ERC-20; Orbs also runs a separate network.
+BLUR,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+TIA,mapped,False,False,celestia,Celestia,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of Celestia.
+BSV,mapped,False,False,bitcoinsv,Bitcoin SV,native,,,,high,https://bitcoinsv.com,Native asset of Bitcoin SV.
+ADA,mapped,False,False,cardano,Cardano,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of Cardano.
+TON,mapped,True,False,ton,TON,native,,,,high,https://www.coingecko.com/en/coins/gram,Delisted ticker. Same network as GRAM after the Toncoin rebrand. The delisted book is not used as the gas price.
+MINA,mapped,False,False,mina,Mina,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of Mina.
+POLYX,mapped,False,False,polymesh,Polymesh,native,,,,high,https://polymesh.network,Native asset of Polymesh.
+GAS,mapped,False,False,neo,Neo N3,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,GAS is the native fuel asset of Neo N3. Kraken's deposit rail is Neo X.
+PENDLE,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+STG,mapped,True,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Delisted. Kraken lists Ethereum.
+FET,mapped,False,False,fetchai,Fetch.ai,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Kraken's only deposit network is Fetch.ai. FET remains the ticker through the ASI merger.
+STRAX,unmapped,True,False,,,,,,,,https://www.coingecko.com/en/coins/stratis,"Delisted. CoinGecko now lists this asset as Xertra with an empty platform field, so the post-rebrand chain is not confirmed."
+NEAR,mapped,False,False,near,NEAR,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of NEAR.
+MEME,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Memeland memecoin.
+ORDI,mapped,False,False,bitcoin,Bitcoin,hosted,brc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,"BRC-20 on Bitcoin, not the native BTC asset."
+BADGER,mapped,True,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Delisted.
+NEO,mapped,False,False,neo,Neo N3,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,NEO is the native governance asset of Neo N3. Kraken's deposit rail is Neo X.
+ZEN,mapped,False,False,base,Base,hosted,erc20,,,medium,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,"CoinGecko asset_platform_id for Horizen (zencash) is base, category Base Native. A legacy Horizen-chain contract still exists."
+FIL,mapped,False,False,filecoin,Filecoin,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of Filecoin.
+PYTH,mapped,False,False,solana,Solana,hosted,spl,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Kraken lists Solana. Wormhole OFT copies exist.
+SUSHI,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+ILV,mapped,True,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Delisted.
+IMX,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,"Kraken lists Ethereum, not Immutable zkEVM."
+kBONK,mapped,False,False,solana,Solana,hosted,spl,1000,BONK,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,k-prefix is 1000 units of the underlying. BONK is an SPL token.
+GMT,mapped,False,False,solana,Solana,hosted,spl,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,STEPN. Kraken lists Solana.
+SUPER,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+USTC,stable_excluded,True,True,terraclassic,Terra Classic,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,"TerraClassicUSD, issued as a stablecoin. Excluded even though the peg failed. Delisted on Hyperliquid."
+NFTI,unmapped,True,False,,,,,,,,,Delisted. Home chain was not confirmed.
+JUP,mapped,False,False,solana,Solana,hosted,spl,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+kLUNC,mapped,False,False,terraclassic,Terra Classic,hosted,,1000,LUNC,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,"k-prefix is 1000 units of the underlying. 1000 LUNC. LUNC is Terra Classic's native asset, so the role of the underlying is native; the perp itself is a 1000-unit contract. Underlying role is native."
+RSR,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+GALA,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Kraken lists Ethereum. GalaChain is a separate network and is not used as the home.
+JTO,mapped,False,False,solana,Solana,hosted,spl,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+NTRN,mapped,True,False,neutron,Neutron,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Delisted. Native asset of Neutron.
+ACE,mapped,False,False,bnb,BNB Smart Chain,hosted,bep20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Delisted. CoinGecko endurance (Fusionist) lists a single BNB Chain contract.
+MAV,unmapped,True,False,,,,,,,,https://www.coingecko.com/en/coins/maverick-protocol,"Delisted. Maverick lists Ethereum, Base, BNB Chain, and zkSync contracts with no single home."
+WIF,mapped,False,False,solana,Solana,hosted,spl,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+CAKE,mapped,False,False,bnb,BNB Smart Chain,hosted,bep20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+PEOPLE,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,ConstitutionDAO.
+ENS,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+ETC,mapped,False,False,ethereumclassic,Ethereum Classic,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of Ethereum Classic.
+XAI,mapped,False,False,arbitrum,Arbitrum One,hosted,erc20,,,medium,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,CoinGecko asset xai-blockchain lists a single Arbitrum contract. Xai is an L3; the indexed token contract is on Arbitrum One.
+MANTA,mapped,False,False,manta,Manta Pacific,hosted,erc20,,,medium,https://manta.network,"Mapped to Manta Pacific, where the network token lives. ETH is gas. Confidence medium."
+UMA,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+ONDO,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+ALT,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,AltLayer.
+ZETA,mapped,False,False,zetachain,ZetaChain,native,,,,high,https://www.zetachain.com,ZETA is the gas token of ZetaChain. Kraken deposits the Ethereum ERC-20 representation.
+DYM,mapped,False,False,dymension,Dymension,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of Dymension.
+MAVIA,unmapped,True,False,,,,,,,,,Delisted. Heroes of Mavia token chain was not confirmed in the sources checked.
+W,unmapped,False,False,,,,,,,,https://wormhole.com,"Wormhole W is an NTT token launched as multichain. Kraken deposits only the Solana representation. That is an exchange choice, not a single home chain."
+PANDORA,mapped,True,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Delisted. Pandora ERC-404. The HL mid is a high unit price consistent with that token.
+STRK,mapped,False,False,starknet,Starknet,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Fee token of Starknet.
+PIXEL,unmapped,True,False,,,,,,,,https://www.coingecko.com/en/coins/pixels,Delisted. CoinGecko pixels lists Ethereum and Ronin contracts with no single home.
+AI,unmapped,True,False,,,,,,,,,Delisted. Ticker collision; the specific token was not confirmed.
+TAO,mapped,False,False,bittensor,Bittensor,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of Bittensor.
+AR,mapped,False,False,arweave,Arweave,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of Arweave.
+MYRO,mapped,True,False,solana,Solana,hosted,spl,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Delisted.
+kFLOKI,unmapped,False,False,,,,,1000,FLOKI,,https://www.coingecko.com/en/coins/floki,FLOKI has official contracts on both Ethereum (0xcf0c122c6b73ff809c693db761e7baebe62b6a2e) and BNB Chain (0xfb5b838b6cfeedc2873ab27866079ac55363d37e). Neither the project nor a primary lock-and-release home picks one. Kraken lists only Ethereum.
+BOME,mapped,False,False,solana,Solana,hosted,spl,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+ETHFI,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+ENA,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Ethena governance token. USDe is the stablecoin and is not this perp.
+MNT,mapped,False,False,mantle,Mantle,native,,,,high,https://www.mantle.xyz,MNT is Mantle's gas token. Kraken deposits the Ethereum ERC-20 representation.
+TNSR,mapped,False,False,solana,Solana,hosted,spl,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+SAGA,mapped,False,False,saga,Saga,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of Saga.
+MERL,mapped,False,False,bnb,BNB Smart Chain,hosted,bep20,,,medium,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Kraken's deposit network is BNB Chain. Merlin Chain is the project's Bitcoin L2; the liquid token Kraken supports is the BEP-20.
+HBAR,mapped,False,False,hedera,Hedera,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of Hedera.
+POPCAT,mapped,False,False,solana,Solana,hosted,spl,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+OMNI,mapped,True,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Delisted. Omni Network token is an Ethereum ERC-20.
+EIGEN,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+REZ,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+NOT,mapped,False,False,ton,TON,hosted,jetton,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Notcoin jetton.
+TURBO,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+BRETT,mapped,False,False,base,Base,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Base meme token.
+IO,mapped,False,False,solana,Solana,hosted,spl,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,io.net.
+ZK,mapped,False,False,zksync,ZKsync Era,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Kraken lists zkSync Era. ETH is gas.
+BLAST,mapped,True,False,blast,Blast,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Delisted. BLAST token on Blast. ETH is gas.
+LISTA,mapped,True,False,bnb,BNB Smart Chain,hosted,bep20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,"Delisted. Lista DAO token, not the lisUSD stablecoin."
+MEW,mapped,True,False,solana,Solana,hosted,spl,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Delisted. cat in a dogs world.
+RENDER,mapped,False,False,solana,Solana,hosted,spl,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Post-migration Render token. Kraken lists Solana. The old RNDR ticker is the Ethereum token.
+kDOGS,mapped,True,False,ton,TON,hosted,jetton,1000,DOGS,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,k-prefix is 1000 units of the underlying. Delisted. DOGS is a TON jetton.
+POL,mapped,False,False,polygon,Polygon PoS,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Gas token of Polygon PoS. An ERC-20 representation also exists on Ethereum.
+CATI,mapped,True,False,ton,TON,hosted,jetton,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Delisted. Catizen jetton.
+CELO,mapped,False,False,celo,Celo,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Gas token of Celo.
+HMSTR,mapped,False,False,ton,TON,hosted,jetton,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Hamster Kombat jetton.
+SCR,mapped,True,False,scroll,Scroll,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Delisted. SCR token on Scroll. ETH is gas.
+NEIROETH,mapped,True,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,"Delisted. The ETH-qualified ticker is the Ethereum Neiro, which is why it is not treated as the same market as kNEIRO."
+kNEIRO,unmapped,False,False,,,,,1000,,,,"Hyperliquid lists kNEIRO and NEIROETH separately. NEIROETH is the Ethereum Neiro. The underlying of kNEIRO was not confirmed (several Neiro tokens exist), so the chain is not guessed."
+GOAT,mapped,False,False,solana,Solana,hosted,spl,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+MOODENG,mapped,False,False,solana,Solana,hosted,spl,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Moo Deng. Kraken lists Solana.
+GRASS,mapped,False,False,solana,Solana,hosted,spl,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+PURR,mapped,False,False,hyperliquid,Hyperliquid,hosted,hip-1,,,high,https://api.hyperliquid.xyz/info,HIP-1 token on Hyperliquid. HYPE is gas. Spot meta gives it a HyperEVM contract as well.
+PNUT,mapped,False,False,solana,Solana,hosted,spl,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+XLM,mapped,False,False,stellar,Stellar,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of Stellar.
+CHILLGUY,mapped,True,False,solana,Solana,hosted,spl,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Delisted.
+SAND,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+IOTA,mapped,False,False,iota,IOTA,native,,,,high,https://www.iota.org,Native asset of IOTA.
+ALGO,mapped,False,False,algorand,Algorand,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of Algorand.
+HYPE,mapped,False,False,hyperliquid,Hyperliquid,native,,,,high,https://hyperliquid.xyz,Native gas token of Hyperliquid L1 / HyperEVM.
+ME,mapped,False,False,solana,Solana,hosted,spl,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Magic Eden. Kraken lists Solana.
+MOVE,mapped,False,False,movement,Movement,native,,,,high,https://www.coingecko.com/en/coins/movement,CoinGecko lists a Movement platform address 0xa plus bridged ERC-20s on Ethereum and Base. Mapped as the native Movement asset.
+VIRTUAL,unmapped,False,False,,,,,,,,https://www.coingecko.com/en/coins/virtual-protocol,"CoinGecko virtual-protocol lists Ethereum, Base, Solana, Robinhood, and Arc contracts. Kraken deposits only Solana. No single home chain is stated."
+PENGU,mapped,False,False,solana,Solana,hosted,spl,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+USUAL,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Usual governance token. USD0 is the stablecoin and is not this perp.
+FARTCOIN,mapped,False,False,solana,Solana,hosted,spl,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+AI16Z,mapped,True,False,solana,Solana,hosted,spl,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,"Delisted. Later associated with the ElizaOS rebrand, which Kraken lists on Solana."
+AIXBT,mapped,False,False,base,Base,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Kraken lists Base.
+ZEREBRO,mapped,True,False,solana,Solana,hosted,spl,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Delisted.
+BIO,mapped,False,False,solana,Solana,hosted,spl,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Bio Protocol. Kraken lists Solana.
+GRIFFAIN,mapped,False,False,solana,Solana,hosted,spl,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+SPX,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,SPX6900.
+S,mapped,False,False,sonic,Sonic,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native gas token of Sonic.
+MORPHO,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+TRUMP,mapped,False,False,solana,Solana,hosted,spl,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Official Trump. Kraken lists Solana. Distinct from the old Hyperliquid spot meme also called TRUMP.
+MELANIA,mapped,False,False,solana,Solana,hosted,spl,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+ANIME,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+VINE,mapped,True,False,solana,Solana,hosted,spl,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Delisted.
+VVV,mapped,False,False,base,Base,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Venice token. Kraken lists Base.
+JELLY,unmapped,True,False,,,,,,,,,"Delisted. A Solana token jelly-my-jelly exists, and Hyperliquid also traded a distinct JELLY market. The delisted perp was not tied to one contract in the sources checked."
+BERA,mapped,False,False,berachain,Berachain,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native gas token of Berachain.
+TST,mapped,True,False,bnb,BNB Smart Chain,hosted,bep20,,,medium,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Delisted. Mapped as the BNB Chain TST meme associated with the 2025 Binance listing. Confidence medium.
+LAYER,mapped,False,False,solana,Solana,hosted,spl,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Solayer. Kraken lists Solana.
+IP,mapped,True,False,story,Story,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Delisted. Native asset of Story.
+OM,mapped,True,False,mantra,MANTRA,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Delisted. Native asset of MANTRA chain.
+KAITO,mapped,False,False,base,Base,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Kraken and Coinone list Base.
+NIL,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Migrated from nilChain to Ethereum ERC-20 in March 2026. https://nillion.com/news/nil-token-migration-guide/
+PAXG,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,"Pax Gold is a commodity token, not a dollar stablecoin."
+PROMPT,mapped,True,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Delisted. Kraken lists Ethereum.
+BABY,mapped,False,False,babylon,Babylon,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of Babylon.
+WCT,mapped,False,False,optimism,Optimism,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,WalletConnect token. Kraken and Coinone list Optimism.
+HYPER,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Hyperlane. Not the Hyperliquid gas token HYPE.
+ZORA,mapped,False,False,base,Base,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,"Kraken and Coinone list Base, not the Zora network as the token home."
+INIT,mapped,False,False,initia,Initia,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of Initia.
+DOOD,unmapped,True,False,,,,,,,,,Delisted. Doodles token chain was not confirmed in the sources checked.
+LAUNCHCOIN,unmapped,True,False,,,,,,,,,Delisted. Home chain was not confirmed in the sources checked.
+NXPC,mapped,False,False,avalanche,Avalanche C-Chain,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,NEXPACE. Coinone and Hinadex list Avalanche C-Chain.
+SOPH,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Sophon docs: SOPH is an Ethereum-native ERC-20. The Sophon chain token is a bridged representation and that chain is being wound down. https://docs.sophon.xyz/tokenomics/soph
+RESOLV,unmapped,False,False,,,,,,,,https://docs.resolv.xyz/litepaper/resolv-token/resolv-token-overview,"Resolv governance token, not the USR stablecoin. CoinGecko lists Ethereum and BNB Chain contracts and the docs do not name a single home."
+SYRUP,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Maple SYRUP.
+PUMP,mapped,False,False,solana,Solana,hosted,spl,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,pump.fun token. Not the old Hyperliquid spot meme that reused the ticker.
+PROVE,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Succinct.
+YZY,mapped,True,False,solana,Solana,hosted,spl,,,high,https://www.coingecko.com/en/coins/yzy,Delisted. CoinGecko yzy lists a single Solana mint.
+XPL,mapped,False,False,plasma,Plasma,native,,,,high,https://www.plasma.org/docs/plasma-chain/network-information/connect-to-plasma,Native gas token of Plasma.
+WLFI,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://docs.worldlibertyfinancial.com/wlfi-token/contract-addresses,Governance token. Ethereum is the lock-and-release CCIP home. BNB Chain and Solana are burn-and-mint copies. Not the USD1 stablecoin.
+LINEA,mapped,False,False,linea,Linea,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Kraken lists Linea. ETH is gas.
+SKY,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Sky governance token. USDS is the stablecoin and is not this perp.
+ASTER,mapped,False,False,bnb,BNB Smart Chain,hosted,bep20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Aster docs: BEP-20 0x000Ae314E2A2172a039B26378814C252734f556A. APX was rebranded to ASTER. https://docs.asterdex.com/usdaster-token/overview
+AVNT,mapped,False,False,base,Base,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Avantis. Kraken lists Base.
+STBL,unmapped,False,False,,,,,,,,https://docs.stbl.com/docs/introduction/developer-overview,"STBL is the governance token, not the USST stablecoin. Official contracts exist on Ethereum (0xB3116013C55D49f575ace3cb0d123f3dbF6caC35) and BNB Chain (0x8dEdf84656fa932157e27C060D8613824e7979e3). Terms say primarily Ethereum while Kraken lists only BNB Chain."
+0G,mapped,False,False,zerog,0G,native,,,,high,https://docs.0g.ai/developer-hub/mainnet/mainnet-overview,Native gas token of 0G. Token symbol on the network is 0G.
+HEMI,unmapped,False,False,,,,,,,,,"Hemi network gas is ETH (https://docs.hemi.xyz/discover/network-details). The HEMI token's issuance chain was not confirmed, so it is not assigned to Hemi or Ethereum."
+APEX,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,"ApeX Protocol. HL mid matches the Ethereum contract market. This is not ASTER, which is the APX rebrand."
+2Z,mapped,False,False,solana,Solana,hosted,spl,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,DoubleZero. Kraken lists Solana.
+ZEC,mapped,False,False,zcash,Zcash,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of Zcash.
+MON,mapped,False,False,monad,Monad,native,,,,high,https://monad.xyz/about,Native gas and staking token of Monad.
+MET,mapped,False,False,solana,Solana,hosted,spl,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Meteora. Kraken lists Solana.
+MEGA,mapped,False,False,megaeth,MegaETH,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,"Kraken's network is MegaETH. The public chain metadata lists ETH as gas, so MEGA is hosted rather than the gas token."
+CC,mapped,False,False,canton,Canton,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of Canton Network.
+ICP,mapped,False,False,icp,Internet Computer,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of the Internet Computer.
+AERO,mapped,False,False,base,Base,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Aerodrome.
+STABLE,mapped,False,False,bnb,BNB Smart Chain,hosted,bep20,,,medium,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,"Kraken lists STABLE on BNB Chain and does not mark it as a stablecoin. HL mid is about $0.02, so it is not a dollar peg. Project identity beyond that listing was not independently documented."
+FOGO,mapped,False,False,fogo,Fogo,native,,,,high,https://community-docs.fogo.io/,Native gas and staking token of Fogo.
+LIT,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,"Lighter, not Litentry. HL mid matches CoinGecko lighter (about $2.37) and the Ethereum contract 0x232ce3bd40fcd6f80f3d55a522d03f25df784ee2. Kraken lists this asset as LIGHTER on Ethereum and a different LIT as Litentry."
+XMR,mapped,False,False,monero,Monero,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of Monero.
+AXS,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Kraken lists Ethereum. Ronin holds a bridged game balance.
+DASH,mapped,False,False,dash,Dash,native,,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Native asset of Dash.
+SKR,mapped,False,False,solana,Solana,hosted,spl,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Seeker. Kraken lists Solana.
+AZTEC,mapped,False,False,ethereum,Ethereum,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,Kraken lists the Aztec token as an Ethereum ERC-20.
+CHIP,mapped,False,False,arbitrum,Arbitrum One,hosted,erc20,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,"USD.AI token. HL mid is far from $1, so it is not treated as a stablecoin. Kraken ticker USD.AI, network Arbitrum."
+GRAM,mapped,False,False,ton,TON,native,,,,high,https://www.coingecko.com/en/coins/gram,CoinGecko id the-open-network: Toncoin rebranded to GRAM. Native asset of TON. ERC-20 and BEP-20 representations also exist.
+CASHCAT,mapped,False,False,cashcat,CashCat Chain,native,,,,high,https://docs.cashcat.network/getting-started/get-cashcat,Native gas coin of CashCat Chain. Also issued as an ERC-20 on Robinhood Chain and bridged.
+PONS,mapped,False,False,robinhood,Robinhood Chain,hosted,erc20,,,high,https://www.coingecko.com/en/coins/pons,"ERC-20 on Robinhood Chain (chain 4663), contract 0x39dbed3a2bd333467115de45665cc57f813c4571."
+USELESS,mapped,False,False,solana,Solana,hosted,spl,,,high,https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken,
+XTEN,mapped,False,False,arc,Arc,hosted,erc20,,,high,https://docs.extended.exchange/extended-resources/xten/tokenomics,"Extended's token. Docs name Arc as the genesis network, with CCTP to Ethereum, Arbitrum, and Base. Not treated as Arc's gas token."

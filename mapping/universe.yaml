@@ -1,0 +1,3335 @@
+# Hyperliquid perp -> native chain mapping.
+# Review this file when a new perp appears. sync never guesses a chain;
+# unknown tickers are appended with status: unmapped.
+version: 1
+updated: '2026-11-22T22:02:24Z'
+hl_universe_size: 235
+policy:
+  stablecoins: A perp is excluded only when the token itself is a stablecoin. Governance tokens of stablecoin
+    issuers (ENA, SKY, USUAL, and similar) stay in. Failed pegs that were issued as stablecoins (USTC)
+    stay out. Price near $1 is not enough on its own, and a ticker that merely contains STABLE is not
+    enough.
+  k_prefix: A ticker matching k + Uppercase (kPEPE, kBONK) is Hyperliquid's 1000-unit contract on the
+    underlying token. The chain is the underlying token's chain. KAS is not a k-prefix.
+  native_vs_hosted: asset_role native means the coin is the chain's gas or staking asset. hosted means
+    it was issued on that chain (ERC-20, SPL, jetton, BRC-20, HIP-1) while another asset pays gas. A bridged
+    representation on a second chain does not move the mapping when a home chain is documented (lock-and-release
+    home, gas token, or a single CoinGecko asset_platform_id).
+  unmapped: If the home chain is unknown, or two chains are co-equal official issuances, the coin is status
+    unmapped. sync never fills that in from a name or a market-cap guess.
+  prices: USD conversions use Hyperliquid allMids only. USDC, the HL quote asset, is 1 when a chain's
+    gas token is USDC and allMids has no USDC row.
+  kraken_list_as_of: '2026-10-30'
+coins:
+- status: mapped
+  chain_id: bitcoin
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://bitcoin.org
+  notes: Native asset of Bitcoin.
+  ticker: BTC
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Bitcoin
+- status: mapped
+  chain_id: ethereum
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of Ethereum. Kraken also lists bridged representations; the home chain is Ethereum.
+  ticker: ETH
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: cosmoshub
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of Cosmos Hub.
+  ticker: ATOM
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Cosmos Hub
+- status: mapped
+  chain_id: polygon
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted legacy ticker for the Polygon gas asset before POL.
+  ticker: MATIC
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Polygon PoS
+- status: mapped
+  chain_id: dydx
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of dYdX Chain after the Ethereum migration.
+  ticker: DYDX
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: dYdX Chain
+- status: mapped
+  chain_id: solana
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of Solana.
+  ticker: SOL
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Solana
+- status: mapped
+  chain_id: avalanche
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of Avalanche. Activity collected on the C-Chain.
+  ticker: AVAX
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Avalanche C-Chain
+- status: mapped
+  chain_id: bnb
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of BNB Smart Chain.
+  ticker: BNB
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: BNB Smart Chain
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ApeCoin ERC-20.
+  ticker: APE
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: optimism
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: OP is the governance token. ETH is gas.
+  ticker: OP
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Optimism
+- status: mapped
+  chain_id: litecoin
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of Litecoin.
+  ticker: LTC
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Litecoin
+- status: mapped
+  chain_id: arbitrum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ARB is the governance token on Arbitrum One. ETH is gas.
+  ticker: ARB
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Arbitrum One
+- status: mapped
+  chain_id: dogecoin
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of Dogecoin.
+  ticker: DOGE
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Dogecoin
+- status: mapped
+  chain_id: injective
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of Injective.
+  ticker: INJ
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Injective
+- status: mapped
+  chain_id: sui
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of Sui.
+  ticker: SUI
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Sui
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: 1000
+  underlying: PEPE
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: k-prefix is 1000 units of the underlying. PEPE is an Ethereum ERC-20.
+  ticker: kPEPE
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: CRV
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: LDO
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Canonical Chainlink token is the Ethereum ERC-20.
+  ticker: LINK
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: stacks
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of Stacks.
+  ticker: STX
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Stacks
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted pre-migration Render token.
+  ticker: RNDR
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: conflux
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of Conflux.
+  ticker: CFX
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Conflux
+- status: mapped
+  chain_id: fantom
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted. Native asset of Fantom Opera, not the successor S token.
+  ticker: FTM
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Fantom Opera
+- status: mapped
+  chain_id: arbitrum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Canonical GMX token is on Arbitrum. A bridged Avalanche copy exists.
+  ticker: GMX
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Arbitrum One
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: SNX
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: xrpl
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of the XRP Ledger.
+  ticker: XRP
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: XRP Ledger
+- status: mapped
+  chain_id: bitcoincash
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of Bitcoin Cash.
+  ticker: BCH
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Bitcoin Cash
+- status: mapped
+  chain_id: aptos
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of Aptos.
+  ticker: APT
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Aptos
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: AAVE
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: COMP
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted. Maker governance token, later rebranded toward SKY.
+  ticker: MKR
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: optimism
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: WLD
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Optimism
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted. Frax Share, not the FRAX stablecoin.
+  ticker: FXS
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted. HarryPotterObamaSonic10Inu ERC-20.
+  ticker: HPOS
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted. Rollbit coin ERC-20.
+  ticker: RLB
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted.
+  ticker: UNIBOT
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: YGG
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: tron
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of Tron.
+  ticker: TRX
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Tron
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: 1000
+  underlying: SHIB
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: k-prefix is 1000 units of the underlying. SHIB is an Ethereum ERC-20.
+  ticker: kSHIB
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: UNI
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: sei
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native gas asset of Sei.
+  ticker: SEI
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Sei
+- status: mapped
+  chain_id: thorchain
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of THORChain.
+  ticker: RUNE
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: THORChain
+- status: unmapped
+  chain_id: null
+  asset_role: null
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: null
+  sources: []
+  notes: Delisted. Home chain was not confirmed.
+  ticker: OX
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: null
+- status: mapped
+  chain_id: base
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted. friend.tech FRIEND token on Base.
+  ticker: FRIEND
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Base
+- status: unmapped
+  chain_id: null
+  asset_role: null
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: null
+  sources: []
+  notes: Delisted. Home chain was not confirmed.
+  ticker: SHIA
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: null
+- status: mapped
+  chain_id: optimism
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted. Kraken lists Optimism.
+  ticker: CYBER
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Optimism
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Kraken lists only Ethereum. OFT copies exist on other chains; Ethereum is the deposit home used
+    here.
+  ticker: ZRO
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted.
+  ticker: BLZ
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: polkadot
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of Polkadot. Kraken lists Asset Hub as the deposit location for the same native
+    asset.
+  ticker: DOT
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Polkadot
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Banana Gun. The HL mid matches that market, not BANANAS31.
+  ticker: BANANA
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Tellor.
+  ticker: TRB
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted. Original FTT is the Ethereum ERC-20.
+  ticker: FTT
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted.
+  ticker: LOOM
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted.
+  ticker: OGN
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: arbitrum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted. Radiant Capital.
+  ticker: RDNT
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Arbitrum One
+- status: unmapped
+  chain_id: null
+  asset_role: null
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: null
+  sources: []
+  notes: Delisted. Ticker collides across several assets; the Hyperliquid market was not tied to one chain.
+  ticker: ARK
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: null
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted.
+  ticker: BNT
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: canto
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://canto.io
+  notes: Delisted. Native asset of Canto.
+  ticker: CANTO
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Canto
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted.
+  ticker: REQ
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: BIGTIME
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: kaspa
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of Kaspa. Not a k-prefix contract.
+  ticker: KAS
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Kaspa
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted. The traded token is an Ethereum ERC-20; Orbs also runs a separate network.
+  ticker: ORBS
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: BLUR
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: celestia
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of Celestia.
+  ticker: TIA
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Celestia
+- status: mapped
+  chain_id: bitcoinsv
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://bitcoinsv.com
+  notes: Native asset of Bitcoin SV.
+  ticker: BSV
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Bitcoin SV
+- status: mapped
+  chain_id: cardano
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of Cardano.
+  ticker: ADA
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Cardano
+- status: mapped
+  chain_id: ton
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://www.coingecko.com/en/coins/gram
+  notes: Delisted ticker. Same network as GRAM after the Toncoin rebrand. The delisted book is not used
+    as the gas price.
+  ticker: TON
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: TON
+- status: mapped
+  chain_id: mina
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of Mina.
+  ticker: MINA
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Mina
+- status: mapped
+  chain_id: polymesh
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://polymesh.network
+  notes: Native asset of Polymesh.
+  ticker: POLYX
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Polymesh
+- status: mapped
+  chain_id: neo
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: GAS is the native fuel asset of Neo N3. Kraken's deposit rail is Neo X.
+  ticker: GAS
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Neo N3
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: PENDLE
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted. Kraken lists Ethereum.
+  ticker: STG
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: fetchai
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Kraken's only deposit network is Fetch.ai. FET remains the ticker through the ASI merger.
+  ticker: FET
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Fetch.ai
+- status: unmapped
+  chain_id: null
+  asset_role: null
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: null
+  sources:
+  - https://www.coingecko.com/en/coins/stratis
+  notes: Delisted. CoinGecko now lists this asset as Xertra with an empty platform field, so the post-rebrand
+    chain is not confirmed.
+  ticker: STRAX
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: null
+- status: mapped
+  chain_id: near
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of NEAR.
+  ticker: NEAR
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: NEAR
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Memeland memecoin.
+  ticker: MEME
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: bitcoin
+  asset_role: hosted
+  standard: brc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: BRC-20 on Bitcoin, not the native BTC asset.
+  ticker: ORDI
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Bitcoin
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted.
+  ticker: BADGER
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: neo
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: NEO is the native governance asset of Neo N3. Kraken's deposit rail is Neo X.
+  ticker: NEO
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Neo N3
+- status: mapped
+  chain_id: base
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: medium
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: CoinGecko asset_platform_id for Horizen (zencash) is base, category Base Native. A legacy Horizen-chain
+    contract still exists.
+  ticker: ZEN
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Base
+- status: mapped
+  chain_id: filecoin
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of Filecoin.
+  ticker: FIL
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Filecoin
+- status: mapped
+  chain_id: solana
+  asset_role: hosted
+  standard: spl
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Kraken lists Solana. Wormhole OFT copies exist.
+  ticker: PYTH
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Solana
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: SUSHI
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted.
+  ticker: ILV
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Kraken lists Ethereum, not Immutable zkEVM.
+  ticker: IMX
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: solana
+  asset_role: hosted
+  standard: spl
+  multiplier: 1000
+  underlying: BONK
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: k-prefix is 1000 units of the underlying. BONK is an SPL token.
+  ticker: kBONK
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Solana
+- status: mapped
+  chain_id: solana
+  asset_role: hosted
+  standard: spl
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: STEPN. Kraken lists Solana.
+  ticker: GMT
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Solana
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: SUPER
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: stable_excluded
+  chain_id: terraclassic
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: TerraClassicUSD, issued as a stablecoin. Excluded even though the peg failed. Delisted on Hyperliquid.
+  is_stablecoin: true
+  ticker: USTC
+  is_delisted: true
+  chain_name: Terra Classic
+- status: unmapped
+  chain_id: null
+  asset_role: null
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: null
+  sources: []
+  notes: Delisted. Home chain was not confirmed.
+  ticker: NFTI
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: null
+- status: mapped
+  chain_id: solana
+  asset_role: hosted
+  standard: spl
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: JUP
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Solana
+- status: mapped
+  chain_id: terraclassic
+  asset_role: hosted
+  standard: null
+  multiplier: 1000
+  underlying: LUNC
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: k-prefix is 1000 units of the underlying. 1000 LUNC. LUNC is Terra Classic's native asset, so
+    the role of the underlying is native; the perp itself is a 1000-unit contract. Underlying role is
+    native.
+  ticker: kLUNC
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Terra Classic
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: RSR
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Kraken lists Ethereum. GalaChain is a separate network and is not used as the home.
+  ticker: GALA
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: solana
+  asset_role: hosted
+  standard: spl
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: JTO
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Solana
+- status: mapped
+  chain_id: neutron
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted. Native asset of Neutron.
+  ticker: NTRN
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Neutron
+- status: mapped
+  chain_id: bnb
+  asset_role: hosted
+  standard: bep20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted. CoinGecko endurance (Fusionist) lists a single BNB Chain contract.
+  ticker: ACE
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: BNB Smart Chain
+- status: unmapped
+  chain_id: null
+  asset_role: null
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: null
+  sources:
+  - https://www.coingecko.com/en/coins/maverick-protocol
+  notes: Delisted. Maverick lists Ethereum, Base, BNB Chain, and zkSync contracts with no single home.
+  ticker: MAV
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: null
+- status: mapped
+  chain_id: solana
+  asset_role: hosted
+  standard: spl
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: WIF
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Solana
+- status: mapped
+  chain_id: bnb
+  asset_role: hosted
+  standard: bep20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: CAKE
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: BNB Smart Chain
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ConstitutionDAO.
+  ticker: PEOPLE
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: ENS
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: ethereumclassic
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of Ethereum Classic.
+  ticker: ETC
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum Classic
+- status: mapped
+  chain_id: arbitrum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: medium
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: CoinGecko asset xai-blockchain lists a single Arbitrum contract. Xai is an L3; the indexed token
+    contract is on Arbitrum One.
+  ticker: XAI
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Arbitrum One
+- status: mapped
+  chain_id: manta
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: medium
+  sources:
+  - https://manta.network
+  notes: Mapped to Manta Pacific, where the network token lives. ETH is gas. Confidence medium.
+  ticker: MANTA
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Manta Pacific
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: UMA
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: ONDO
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: AltLayer.
+  ticker: ALT
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: zetachain
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://www.zetachain.com
+  notes: ZETA is the gas token of ZetaChain. Kraken deposits the Ethereum ERC-20 representation.
+  ticker: ZETA
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: ZetaChain
+- status: mapped
+  chain_id: dymension
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of Dymension.
+  ticker: DYM
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Dymension
+- status: unmapped
+  chain_id: null
+  asset_role: null
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: null
+  sources: []
+  notes: Delisted. Heroes of Mavia token chain was not confirmed in the sources checked.
+  ticker: MAVIA
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: null
+- status: unmapped
+  chain_id: null
+  asset_role: null
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: null
+  sources:
+  - https://wormhole.com
+  notes: Wormhole W is an NTT token launched as multichain. Kraken deposits only the Solana representation.
+    That is an exchange choice, not a single home chain.
+  ticker: W
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: null
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted. Pandora ERC-404. The HL mid is a high unit price consistent with that token.
+  ticker: PANDORA
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: starknet
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Fee token of Starknet.
+  ticker: STRK
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Starknet
+- status: unmapped
+  chain_id: null
+  asset_role: null
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: null
+  sources:
+  - https://www.coingecko.com/en/coins/pixels
+  notes: Delisted. CoinGecko pixels lists Ethereum and Ronin contracts with no single home.
+  ticker: PIXEL
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: null
+- status: unmapped
+  chain_id: null
+  asset_role: null
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: null
+  sources: []
+  notes: Delisted. Ticker collision; the specific token was not confirmed.
+  ticker: AI
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: null
+- status: mapped
+  chain_id: bittensor
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of Bittensor.
+  ticker: TAO
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Bittensor
+- status: mapped
+  chain_id: arweave
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of Arweave.
+  ticker: AR
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Arweave
+- status: mapped
+  chain_id: solana
+  asset_role: hosted
+  standard: spl
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted.
+  ticker: MYRO
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Solana
+- status: unmapped
+  chain_id: null
+  asset_role: null
+  standard: null
+  multiplier: 1000
+  underlying: FLOKI
+  confidence: null
+  sources:
+  - https://www.coingecko.com/en/coins/floki
+  notes: FLOKI has official contracts on both Ethereum (0xcf0c122c6b73ff809c693db761e7baebe62b6a2e) and
+    BNB Chain (0xfb5b838b6cfeedc2873ab27866079ac55363d37e). Neither the project nor a primary lock-and-release
+    home picks one. Kraken lists only Ethereum.
+  ticker: kFLOKI
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: null
+- status: mapped
+  chain_id: solana
+  asset_role: hosted
+  standard: spl
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: BOME
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Solana
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: ETHFI
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Ethena governance token. USDe is the stablecoin and is not this perp.
+  ticker: ENA
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: mantle
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://www.mantle.xyz
+  notes: MNT is Mantle's gas token. Kraken deposits the Ethereum ERC-20 representation.
+  ticker: MNT
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Mantle
+- status: mapped
+  chain_id: solana
+  asset_role: hosted
+  standard: spl
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: TNSR
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Solana
+- status: mapped
+  chain_id: saga
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of Saga.
+  ticker: SAGA
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Saga
+- status: mapped
+  chain_id: bnb
+  asset_role: hosted
+  standard: bep20
+  multiplier: null
+  underlying: null
+  confidence: medium
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Kraken's deposit network is BNB Chain. Merlin Chain is the project's Bitcoin L2; the liquid token
+    Kraken supports is the BEP-20.
+  ticker: MERL
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: BNB Smart Chain
+- status: mapped
+  chain_id: hedera
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of Hedera.
+  ticker: HBAR
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Hedera
+- status: mapped
+  chain_id: solana
+  asset_role: hosted
+  standard: spl
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: POPCAT
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Solana
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted. Omni Network token is an Ethereum ERC-20.
+  ticker: OMNI
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: EIGEN
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: REZ
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: ton
+  asset_role: hosted
+  standard: jetton
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Notcoin jetton.
+  ticker: NOT
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: TON
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: TURBO
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: base
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Base meme token.
+  ticker: BRETT
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Base
+- status: mapped
+  chain_id: solana
+  asset_role: hosted
+  standard: spl
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: io.net.
+  ticker: IO
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Solana
+- status: mapped
+  chain_id: zksync
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Kraken lists zkSync Era. ETH is gas.
+  ticker: ZK
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: ZKsync Era
+- status: mapped
+  chain_id: blast
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted. BLAST token on Blast. ETH is gas.
+  ticker: BLAST
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Blast
+- status: mapped
+  chain_id: bnb
+  asset_role: hosted
+  standard: bep20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted. Lista DAO token, not the lisUSD stablecoin.
+  ticker: LISTA
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: BNB Smart Chain
+- status: mapped
+  chain_id: solana
+  asset_role: hosted
+  standard: spl
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted. cat in a dogs world.
+  ticker: MEW
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Solana
+- status: mapped
+  chain_id: solana
+  asset_role: hosted
+  standard: spl
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Post-migration Render token. Kraken lists Solana. The old RNDR ticker is the Ethereum token.
+  ticker: RENDER
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Solana
+- status: mapped
+  chain_id: ton
+  asset_role: hosted
+  standard: jetton
+  multiplier: 1000
+  underlying: DOGS
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: k-prefix is 1000 units of the underlying. Delisted. DOGS is a TON jetton.
+  ticker: kDOGS
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: TON
+- status: mapped
+  chain_id: polygon
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Gas token of Polygon PoS. An ERC-20 representation also exists on Ethereum.
+  ticker: POL
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Polygon PoS
+- status: mapped
+  chain_id: ton
+  asset_role: hosted
+  standard: jetton
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted. Catizen jetton.
+  ticker: CATI
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: TON
+- status: mapped
+  chain_id: celo
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Gas token of Celo.
+  ticker: CELO
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Celo
+- status: mapped
+  chain_id: ton
+  asset_role: hosted
+  standard: jetton
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Hamster Kombat jetton.
+  ticker: HMSTR
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: TON
+- status: mapped
+  chain_id: scroll
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted. SCR token on Scroll. ETH is gas.
+  ticker: SCR
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Scroll
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted. The ETH-qualified ticker is the Ethereum Neiro, which is why it is not treated as the
+    same market as kNEIRO.
+  ticker: NEIROETH
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: unmapped
+  chain_id: null
+  asset_role: null
+  standard: null
+  multiplier: 1000
+  underlying: null
+  confidence: null
+  sources: []
+  notes: Hyperliquid lists kNEIRO and NEIROETH separately. NEIROETH is the Ethereum Neiro. The underlying
+    of kNEIRO was not confirmed (several Neiro tokens exist), so the chain is not guessed.
+  ticker: kNEIRO
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: null
+- status: mapped
+  chain_id: solana
+  asset_role: hosted
+  standard: spl
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: GOAT
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Solana
+- status: mapped
+  chain_id: solana
+  asset_role: hosted
+  standard: spl
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Moo Deng. Kraken lists Solana.
+  ticker: MOODENG
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Solana
+- status: mapped
+  chain_id: solana
+  asset_role: hosted
+  standard: spl
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: GRASS
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Solana
+- status: mapped
+  chain_id: hyperliquid
+  asset_role: hosted
+  standard: hip-1
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://api.hyperliquid.xyz/info
+  notes: HIP-1 token on Hyperliquid. HYPE is gas. Spot meta gives it a HyperEVM contract as well.
+  ticker: PURR
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Hyperliquid
+- status: mapped
+  chain_id: solana
+  asset_role: hosted
+  standard: spl
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: PNUT
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Solana
+- status: mapped
+  chain_id: stellar
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of Stellar.
+  ticker: XLM
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Stellar
+- status: mapped
+  chain_id: solana
+  asset_role: hosted
+  standard: spl
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted.
+  ticker: CHILLGUY
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Solana
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: SAND
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: iota
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://www.iota.org
+  notes: Native asset of IOTA.
+  ticker: IOTA
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: IOTA
+- status: mapped
+  chain_id: algorand
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of Algorand.
+  ticker: ALGO
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Algorand
+- status: mapped
+  chain_id: hyperliquid
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://hyperliquid.xyz
+  notes: Native gas token of Hyperliquid L1 / HyperEVM.
+  ticker: HYPE
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Hyperliquid
+- status: mapped
+  chain_id: solana
+  asset_role: hosted
+  standard: spl
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Magic Eden. Kraken lists Solana.
+  ticker: ME
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Solana
+- status: mapped
+  chain_id: movement
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://www.coingecko.com/en/coins/movement
+  notes: CoinGecko lists a Movement platform address 0xa plus bridged ERC-20s on Ethereum and Base. Mapped
+    as the native Movement asset.
+  ticker: MOVE
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Movement
+- status: unmapped
+  chain_id: null
+  asset_role: null
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: null
+  sources:
+  - https://www.coingecko.com/en/coins/virtual-protocol
+  notes: CoinGecko virtual-protocol lists Ethereum, Base, Solana, Robinhood, and Arc contracts. Kraken
+    deposits only Solana. No single home chain is stated.
+  ticker: VIRTUAL
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: null
+- status: mapped
+  chain_id: solana
+  asset_role: hosted
+  standard: spl
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: PENGU
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Solana
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Usual governance token. USD0 is the stablecoin and is not this perp.
+  ticker: USUAL
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: solana
+  asset_role: hosted
+  standard: spl
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: FARTCOIN
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Solana
+- status: mapped
+  chain_id: solana
+  asset_role: hosted
+  standard: spl
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted. Later associated with the ElizaOS rebrand, which Kraken lists on Solana.
+  ticker: AI16Z
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Solana
+- status: mapped
+  chain_id: base
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Kraken lists Base.
+  ticker: AIXBT
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Base
+- status: mapped
+  chain_id: solana
+  asset_role: hosted
+  standard: spl
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted.
+  ticker: ZEREBRO
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Solana
+- status: mapped
+  chain_id: solana
+  asset_role: hosted
+  standard: spl
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Bio Protocol. Kraken lists Solana.
+  ticker: BIO
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Solana
+- status: mapped
+  chain_id: solana
+  asset_role: hosted
+  standard: spl
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: GRIFFAIN
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Solana
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: SPX6900.
+  ticker: SPX
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: sonic
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native gas token of Sonic.
+  ticker: S
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Sonic
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: MORPHO
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: solana
+  asset_role: hosted
+  standard: spl
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Official Trump. Kraken lists Solana. Distinct from the old Hyperliquid spot meme also called
+    TRUMP.
+  ticker: TRUMP
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Solana
+- status: mapped
+  chain_id: solana
+  asset_role: hosted
+  standard: spl
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: MELANIA
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Solana
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: ANIME
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: solana
+  asset_role: hosted
+  standard: spl
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted.
+  ticker: VINE
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Solana
+- status: mapped
+  chain_id: base
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Venice token. Kraken lists Base.
+  ticker: VVV
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Base
+- status: unmapped
+  chain_id: null
+  asset_role: null
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: null
+  sources: []
+  notes: Delisted. A Solana token jelly-my-jelly exists, and Hyperliquid also traded a distinct JELLY
+    market. The delisted perp was not tied to one contract in the sources checked.
+  ticker: JELLY
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: null
+- status: mapped
+  chain_id: berachain
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native gas token of Berachain.
+  ticker: BERA
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Berachain
+- status: mapped
+  chain_id: bnb
+  asset_role: hosted
+  standard: bep20
+  multiplier: null
+  underlying: null
+  confidence: medium
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted. Mapped as the BNB Chain TST meme associated with the 2025 Binance listing. Confidence
+    medium.
+  ticker: TST
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: BNB Smart Chain
+- status: mapped
+  chain_id: solana
+  asset_role: hosted
+  standard: spl
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Solayer. Kraken lists Solana.
+  ticker: LAYER
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Solana
+- status: mapped
+  chain_id: story
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted. Native asset of Story.
+  ticker: IP
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Story
+- status: mapped
+  chain_id: mantra
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted. Native asset of MANTRA chain.
+  ticker: OM
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: MANTRA
+- status: mapped
+  chain_id: base
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Kraken and Coinone list Base.
+  ticker: KAITO
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Base
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Migrated from nilChain to Ethereum ERC-20 in March 2026. https://nillion.com/news/nil-token-migration-guide/
+  ticker: NIL
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Pax Gold is a commodity token, not a dollar stablecoin.
+  ticker: PAXG
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Delisted. Kraken lists Ethereum.
+  ticker: PROMPT
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: babylon
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of Babylon.
+  ticker: BABY
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Babylon
+- status: mapped
+  chain_id: optimism
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: WalletConnect token. Kraken and Coinone list Optimism.
+  ticker: WCT
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Optimism
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Hyperlane. Not the Hyperliquid gas token HYPE.
+  ticker: HYPER
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: base
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Kraken and Coinone list Base, not the Zora network as the token home.
+  ticker: ZORA
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Base
+- status: mapped
+  chain_id: initia
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of Initia.
+  ticker: INIT
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Initia
+- status: unmapped
+  chain_id: null
+  asset_role: null
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: null
+  sources: []
+  notes: Delisted. Doodles token chain was not confirmed in the sources checked.
+  ticker: DOOD
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: null
+- status: unmapped
+  chain_id: null
+  asset_role: null
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: null
+  sources: []
+  notes: Delisted. Home chain was not confirmed in the sources checked.
+  ticker: LAUNCHCOIN
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: null
+- status: mapped
+  chain_id: avalanche
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: NEXPACE. Coinone and Hinadex list Avalanche C-Chain.
+  ticker: NXPC
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Avalanche C-Chain
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: 'Sophon docs: SOPH is an Ethereum-native ERC-20. The Sophon chain token is a bridged representation
+    and that chain is being wound down. https://docs.sophon.xyz/tokenomics/soph'
+  ticker: SOPH
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: unmapped
+  chain_id: null
+  asset_role: null
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: null
+  sources:
+  - https://docs.resolv.xyz/litepaper/resolv-token/resolv-token-overview
+  notes: Resolv governance token, not the USR stablecoin. CoinGecko lists Ethereum and BNB Chain contracts
+    and the docs do not name a single home.
+  ticker: RESOLV
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: null
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Maple SYRUP.
+  ticker: SYRUP
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: solana
+  asset_role: hosted
+  standard: spl
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: pump.fun token. Not the old Hyperliquid spot meme that reused the ticker.
+  ticker: PUMP
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Solana
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Succinct.
+  ticker: PROVE
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: solana
+  asset_role: hosted
+  standard: spl
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://www.coingecko.com/en/coins/yzy
+  notes: Delisted. CoinGecko yzy lists a single Solana mint.
+  ticker: YZY
+  is_delisted: true
+  is_stablecoin: false
+  chain_name: Solana
+- status: mapped
+  chain_id: plasma
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://www.plasma.org/docs/plasma-chain/network-information/connect-to-plasma
+  notes: Native gas token of Plasma.
+  ticker: XPL
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Plasma
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://docs.worldlibertyfinancial.com/wlfi-token/contract-addresses
+  notes: Governance token. Ethereum is the lock-and-release CCIP home. BNB Chain and Solana are burn-and-mint
+    copies. Not the USD1 stablecoin.
+  ticker: WLFI
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: linea
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Kraken lists Linea. ETH is gas.
+  ticker: LINEA
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Linea
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Sky governance token. USDS is the stablecoin and is not this perp.
+  ticker: SKY
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: bnb
+  asset_role: hosted
+  standard: bep20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: 'Aster docs: BEP-20 0x000Ae314E2A2172a039B26378814C252734f556A. APX was rebranded to ASTER. https://docs.asterdex.com/usdaster-token/overview'
+  ticker: ASTER
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: BNB Smart Chain
+- status: mapped
+  chain_id: base
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Avantis. Kraken lists Base.
+  ticker: AVNT
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Base
+- status: unmapped
+  chain_id: null
+  asset_role: null
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: null
+  sources:
+  - https://docs.stbl.com/docs/introduction/developer-overview
+  notes: STBL is the governance token, not the USST stablecoin. Official contracts exist on Ethereum (0xB3116013C55D49f575ace3cb0d123f3dbF6caC35)
+    and BNB Chain (0x8dEdf84656fa932157e27C060D8613824e7979e3). Terms say primarily Ethereum while Kraken
+    lists only BNB Chain.
+  ticker: STBL
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: null
+- status: mapped
+  chain_id: zerog
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://docs.0g.ai/developer-hub/mainnet/mainnet-overview
+  notes: Native gas token of 0G. Token symbol on the network is 0G.
+  ticker: 0G
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: 0G
+- status: unmapped
+  chain_id: null
+  asset_role: null
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: null
+  sources: []
+  notes: Hemi network gas is ETH (https://docs.hemi.xyz/discover/network-details). The HEMI token's issuance
+    chain was not confirmed, so it is not assigned to Hemi or Ethereum.
+  ticker: HEMI
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: null
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ApeX Protocol. HL mid matches the Ethereum contract market. This is not ASTER, which is the APX
+    rebrand.
+  ticker: APEX
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: solana
+  asset_role: hosted
+  standard: spl
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: DoubleZero. Kraken lists Solana.
+  ticker: 2Z
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Solana
+- status: mapped
+  chain_id: zcash
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of Zcash.
+  ticker: ZEC
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Zcash
+- status: mapped
+  chain_id: monad
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://monad.xyz/about
+  notes: Native gas and staking token of Monad.
+  ticker: MON
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Monad
+- status: mapped
+  chain_id: solana
+  asset_role: hosted
+  standard: spl
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Meteora. Kraken lists Solana.
+  ticker: MET
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Solana
+- status: mapped
+  chain_id: megaeth
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Kraken's network is MegaETH. The public chain metadata lists ETH as gas, so MEGA is hosted rather
+    than the gas token.
+  ticker: MEGA
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: MegaETH
+- status: mapped
+  chain_id: canton
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of Canton Network.
+  ticker: CC
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Canton
+- status: mapped
+  chain_id: icp
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of the Internet Computer.
+  ticker: ICP
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Internet Computer
+- status: mapped
+  chain_id: base
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Aerodrome.
+  ticker: AERO
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Base
+- status: mapped
+  chain_id: bnb
+  asset_role: hosted
+  standard: bep20
+  multiplier: null
+  underlying: null
+  confidence: medium
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Kraken lists STABLE on BNB Chain and does not mark it as a stablecoin. HL mid is about $0.02,
+    so it is not a dollar peg. Project identity beyond that listing was not independently documented.
+  ticker: STABLE
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: BNB Smart Chain
+- status: mapped
+  chain_id: fogo
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://community-docs.fogo.io/
+  notes: Native gas and staking token of Fogo.
+  ticker: FOGO
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Fogo
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Lighter, not Litentry. HL mid matches CoinGecko lighter (about $2.37) and the Ethereum contract
+    0x232ce3bd40fcd6f80f3d55a522d03f25df784ee2. Kraken lists this asset as LIGHTER on Ethereum and a different
+    LIT as Litentry.
+  ticker: LIT
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: monero
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of Monero.
+  ticker: XMR
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Monero
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Kraken lists Ethereum. Ronin holds a bridged game balance.
+  ticker: AXS
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: dash
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Native asset of Dash.
+  ticker: DASH
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Dash
+- status: mapped
+  chain_id: solana
+  asset_role: hosted
+  standard: spl
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Seeker. Kraken lists Solana.
+  ticker: SKR
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Solana
+- status: mapped
+  chain_id: ethereum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: Kraken lists the Aztec token as an Ethereum ERC-20.
+  ticker: AZTEC
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Ethereum
+- status: mapped
+  chain_id: arbitrum
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: USD.AI token. HL mid is far from $1, so it is not treated as a stablecoin. Kraken ticker USD.AI,
+    network Arbitrum.
+  ticker: CHIP
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Arbitrum One
+- status: mapped
+  chain_id: ton
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://www.coingecko.com/en/coins/gram
+  notes: 'CoinGecko id the-open-network: Toncoin rebranded to GRAM. Native asset of TON. ERC-20 and BEP-20
+    representations also exist.'
+  ticker: GRAM
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: TON
+- status: mapped
+  chain_id: cashcat
+  asset_role: native
+  standard: null
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://docs.cashcat.network/getting-started/get-cashcat
+  notes: Native gas coin of CashCat Chain. Also issued as an ERC-20 on Robinhood Chain and bridged.
+  ticker: CASHCAT
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: CashCat Chain
+- status: mapped
+  chain_id: robinhood
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://www.coingecko.com/en/coins/pons
+  notes: ERC-20 on Robinhood Chain (chain 4663), contract 0x39dbed3a2bd333467115de45665cc57f813c4571.
+  ticker: PONS
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Robinhood Chain
+- status: mapped
+  chain_id: solana
+  asset_role: hosted
+  standard: spl
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://support.kraken.com/articles/360000678446-cryptocurrencies-available-on-kraken
+  notes: ''
+  ticker: USELESS
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Solana
+- status: mapped
+  chain_id: arc
+  asset_role: hosted
+  standard: erc20
+  multiplier: null
+  underlying: null
+  confidence: high
+  sources:
+  - https://docs.extended.exchange/extended-resources/xten/tokenomics
+  notes: Extended's token. Docs name Arc as the genesis network, with CCTP to Ethereum, Arbitrum, and
+    Base. Not treated as Arc's gas token.
+  ticker: XTEN
+  is_delisted: false
+  is_stablecoin: false
+  chain_name: Arc
