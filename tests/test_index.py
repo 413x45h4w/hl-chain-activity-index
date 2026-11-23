@@ -3,6 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from hl_activity.collectors.cosmos import choose_window, tx_is_protocol
 from hl_activity.mapping import (
     active_index_coins,
     chains_for_coins,
@@ -77,6 +78,35 @@ class MappingTests(unittest.TestCase):
         self.assertIn("solana", chain_ids)
         self.assertNotIn("fantom", chain_ids)
         self.assertNotIn("canto", chain_ids)
+
+
+class CosmosWindowTests(unittest.TestCase):
+    def test_oracle_vote_is_protocol_and_a_transfer_is_not(self):
+        vote = [
+            {"@type": "/terra.oracle.v1beta1.MsgAggregateExchangeRateVote"},
+            {"@type": "/terra.oracle.v1beta1.MsgAggregateExchangeRatePrevote"},
+        ]
+        self.assertTrue(tx_is_protocol(vote))
+        self.assertTrue(tx_is_protocol([{"@type": "/babylon.finality.v1.MsgAddFinalitySig"}]))
+        self.assertFalse(tx_is_protocol([{"@type": "/cosmwasm.wasm.v1.MsgExecuteContract"}]))
+        self.assertFalse(
+            tx_is_protocol(
+                [
+                    {"@type": "/terra.oracle.v1beta1.MsgAggregateExchangeRateVote"},
+                    {"@type": "/cosmos.bank.v1beta1.MsgSend"},
+                ]
+            )
+        )
+
+    def test_minute_window_keeps_ten_six_second_blocks(self):
+        # Newest first. Eleven timestamps make ten block intervals of 6s.
+        stamped = [{"t": 1000 - 6 * i, "height": 100 - i} for i in range(16)]
+        included, window = choose_window(stamped, target_seconds=60, max_blocks=16)
+        self.assertEqual(window, 60)
+        self.assertEqual(len(included), 10)
+        self.assertEqual(included[0]["height"], 100)
+        self.assertEqual(included[-1]["height"], 91)
+        self.assertNotIn(90, [item["height"] for item in included])
 
 
 class RankTests(unittest.TestCase):

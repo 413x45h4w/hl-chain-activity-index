@@ -272,7 +272,12 @@ def collect_aptos(chain):
             for tx in txs:
                 kind = tx.get("type") or "unknown"
                 types[kind] = types.get(kind, 0) + 1
-                if kind in ("block_metadata_transaction", "state_checkpoint_transaction", "validator_transaction"):
+                if kind in (
+                    "block_metadata_transaction",
+                    "state_checkpoint_transaction",
+                    "validator_transaction",
+                    "block_epilogue_transaction",
+                ):
                     excluded += 1
                     continue
                 if tx.get("sender"):

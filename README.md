@@ -77,7 +77,7 @@ Each sample is one chain window: a block, a ledger, a checkpoint span, or a ~60s
 
 - Solana vote transactions, when `numNonVoteTransactions` is lower than `numTransactions` (this is what Fogo's SVM feed does). On Solana mainnet the public RPC currently reports the two fields equal, and a full block contains no `Vote111...` instructions, so votes are not in that feed and excluded is 0. That is recorded on the sample, not assumed in silence.
 - Bitcoin-like coinbase / miner transactions, one per block.
-- Cosmos `MsgWithdrawDelegatorReward` and `MsgWithdrawValidatorCommission` when they are the whole transaction. IBC and governance votes stay in net. Governance votes are users. Solana vote transactions are consensus.
+- Cosmos reward withdrawals, Terra oracle prevote/vote transactions, and Babylon finality signatures, when those messages are the whole transaction. IBC transfers and governance votes stay in net. Oracle votes are validator duties, the same class as a Solana vote. The Cosmos rate uses about 60 seconds of blocks, so a single oracle-vote block is not scaled up as if it repeated every few seconds.
 - OP-stack deposit transactions (`type 0x7e`).
 - Aptos block metadata, state checkpoint, and validator transactions.
 - Algorand key registration and heartbeat.
@@ -146,7 +146,7 @@ A category that a run could not fill is null on that chain's latest window. The 
 
 Collected 22 Nov 2026 from the public endpoints in `mapping/chains.yaml`. The `meta` snapshot has 235 perp markets. 179 are active and not stablecoins. 172 of those are mapped. 7 stay unmapped (W, kFLOKI, kNEIRO, VIRTUAL, RESOLV, STBL, HEMI). USTC is the only stablecoin exclusion. That is 71 active chains.
 
-61 of 71 chains returned a gross transaction count. 43 have a usable net rate and are ranked. 1,390 history rows are stored from repeated passes. Fogo is the clear vote-exclusion case in this run: about 9,020 gross transactions per minute and about 104 after votes. Solana's public feed currently contains no vote instructions, so its net equals its gross and the sample says why. Bitcoin's coinbase is the excluded transaction; the rate uses the measured gap between blocks.
+61 of 71 chains returned a gross transaction count. 42 have a usable net rate and are ranked. History rows are append-only. Fogo still shows the Solana-style vote split (about 8,900 gross transactions per minute, about 105 after votes). Terra Classic is measured over about 60 seconds of blocks: roughly 185 gross transactions per minute, of which about 179 are oracle prevote/vote transactions, leaving about 6 net. Babylon finality signatures are removed the same way. Solana's public feed currently contains no vote instructions, so its net equals its gross and the sample says why. On Ethereum and the other EVM chains, consensus votes and block rewards are not transactions in the execution block, so net and gross stay close. Bitcoin subtracts the one coinbase transaction in the block.
 
 28 chains are unranked because the free source has no measured window, no separable net, or no public feed. That includes TON, Canton, CashCat, Movement, Sui (gross checkpoint delta only), Aptos (windows shorter than a second), Cardano (Koios timed out), and Starknet (HTTP 429).
 
