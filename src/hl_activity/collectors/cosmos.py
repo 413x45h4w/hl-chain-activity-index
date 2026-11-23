@@ -1,10 +1,15 @@
 """Cosmos SDK LCD collector.
 
-Excluded from net: MsgWithdrawDelegatorReward and MsgWithdrawValidatorCommission.
-Governance votes and IBC messages stay in net and are broken out by type.
-A transaction is excluded only when every message is one of those reward
-withdrawals. Mixed transactions stay in net, and the reward messages are
-still counted under distributions.
+The ranking window is about 60 seconds of blocks (the last 10 Terra Classic
+blocks, at a ~6s block time), not a 2-block slice scaled up to a minute.
+A short slice that happens to contain the oracle-vote burst reports several
+times the sustained rate.
+
+Excluded from net when every message in the transaction is protocol work:
+staking-reward withdrawals, Terra oracle prevote/vote, and Babylon finality
+signatures. Those are validator duties, the same class as a Solana vote
+transaction. Governance votes and IBC messages stay in net and are labeled
+on their own.
 """
 
 from __future__ import annotations
@@ -17,6 +22,14 @@ from .common import blank, failure
 REWARD_TYPES = {
     "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward",
     "/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission",
+}
+# Validator duties. A transaction made only of these is not organic usage.
+PROTOCOL_MESSAGE_NAMES = {
+    "MsgWithdrawDelegatorReward",
+    "MsgWithdrawValidatorCommission",
+    "MsgAggregateExchangeRatePrevote",
+    "MsgAggregateExchangeRateVote",
+    "MsgAddFinalitySig",
 }
 SEND_TYPES = {
     "/cosmos.bank.v1beta1.MsgSend",
@@ -41,30 +54,97 @@ def collect_cosmos(chain):
     return [failure(chain, last_error or "cosmos LCD failed")]
 
 
+def message_name(mtype):
+    if not mtype:
+        return ""
+    return str(mtype).rsplit(".", 1)[-1].split("/")[-1]
+
+
+def tx_is_protocol(messages):
+    """True when the transaction is only validator or reward machinery."""
+    names = [message_name(msg.get("@type")) for msg in messages or []]
+    return bool(names) and all(name in PROTOCOL_MESSAGE_NAMES for name in names)
+
+
+def choose_window(stamped, target_seconds, max_blocks):
+    """Pick the blocks inside a minute-scale window.
+
+    ``stamped`` is newest first and each item has ``t`` in seconds.
+    The oldest fetched block is only a timestamp anchor: its transactions
+    belong to the previous interval. Returned blocks are the ones whose
+    production time is inside ``window_seconds``.
+    """
+    fetched = list(stamped[:max_blocks])
+    if len(fetched) < 2 or fetched[0].get("t") is None:
+        return fetched, None
+    end = 2
+    while end < len(fetched):
+        older = fetched[end - 1].get("t")
+        if older is None:
+            break
+        if fetched[0]["t"] - older >= target_seconds:
+            break
+        end += 1
+    anchor = fetched[end - 1]
+    if anchor.get("t") is None:
+        return fetched[: end - 1], None
+    window = fetched[0]["t"] - anchor["t"]
+    if window <= 0:
+        return fetched[: end - 1], None
+    return fetched[: end - 1], window
+
+
 def _from_lcd(chain, base):
     latest = request_json(f"{base}/cosmos/base/tendermint/v1beta1/blocks/latest", timeout=20)
     block = (latest or {}).get("block") or {}
     header = block.get("header") or {}
     height = int(header.get("height"))
     head_time = _parse_time(header.get("time"))
-    depths = int(chain.get("block_depth") or 3)
-    rows = []
-    for offset in range(depths):
-        h = height - offset
-        if h <= 0:
+    target = float(chain.get("target_window_seconds") or 60)
+    max_blocks = int(chain.get("max_blocks") or 16)
+    fetched = []
+    for offset in range(max_blocks):
+        block_height = height - offset
+        if block_height <= 0:
             break
         if offset == 0:
             body = block
             when = head_time
         else:
-            payload = request_json(f"{base}/cosmos/base/tendermint/v1beta1/blocks/{h}", timeout=20)
+            payload = request_json(
+                f"{base}/cosmos/base/tendermint/v1beta1/blocks/{block_height}",
+                timeout=20,
+            )
             body = (payload or {}).get("block") or {}
             when = _parse_time((body.get("header") or {}).get("time"))
         raw_txs = ((body.get("data") or {}).get("txs")) or []
-        gross = len(raw_txs)
-        decoded = _txs_at_height(base, h) if gross else []
+        fetched.append(
+            {
+                "height": block_height,
+                "time": when,
+                "t": _iso_seconds(when),
+                "raw": len(raw_txs),
+            }
+        )
+        included, span = choose_window(fetched, target, max_blocks)
+        if span is not None and span >= target:
+            break
+    included, window_seconds = choose_window(fetched, target, max_blocks)
+    if not included:
+        return [failure(chain, "no cosmos blocks")]
+    rows = []
+    for item in included:
+        gross = item["raw"]
+        decoded = _txs_at_height(base, item["height"]) if gross else []
         decoded_complete = decoded is not None and len(decoded) >= gross
-        sample = _sample_from_block(chain, base, h, when, gross, decoded if decoded_complete else None)
+        sample = _sample_from_block(
+            chain,
+            base,
+            item["height"],
+            item["time"],
+            gross,
+            decoded if decoded_complete else None,
+        )
         if not decoded_complete and gross:
             sample["null_reasons"]["net_tx_count"] = (
                 f"decoded {0 if decoded is None else len(decoded)} of {gross} txs; "
@@ -78,29 +158,19 @@ def _from_lcd(chain, base):
             sample["active_addresses"] = None
             sample["distribution_count"] = None
         rows.append(sample)
-    if len(rows) >= 2:
-        for index, row in enumerate(rows):
-            if index + 1 < len(rows) and rows[index]["observed_at"] and rows[index + 1]["observed_at"]:
-                a = datetime.fromisoformat(rows[index]["observed_at"].replace("Z", "+00:00"))
-                b = datetime.fromisoformat(rows[index + 1]["observed_at"].replace("Z", "+00:00"))
-                delta = (a - b).total_seconds()
-                if delta > 0:
-                    row["window_seconds"] = delta
-    if rows:
-        # Combine the decoded blocks into the ranking window when every block decoded.
-        window = _combine(chain, base, rows)
-        rows[0]["sample_kind"] = "block"
-        return [window] + rows
-    return [failure(chain, "no cosmos blocks")]
+    window = _combine(chain, base, rows, window_seconds)
+    for row in rows:
+        row["sample_kind"] = "block"
+    return [window] + rows
 
 
-def _combine(chain, base, rows):
+def _combine(chain, base, rows, window_seconds):
     head = rows[0]
     if any(r["net_tx_count"] is None and (r["gross_tx_count"] or 0) > 0 for r in rows):
-        # Fall back to the newest block only when it itself is complete.
         head = dict(head)
         head["sample_kind"] = "window"
         head["sample_key"] = f"{chain['id']}:window:{head['head_height']}"
+        head["window_seconds"] = window_seconds
         return head
     gross = sum(r["gross_tx_count"] or 0 for r in rows)
     excluded = sum(r["excluded_tx_count"] or 0 for r in rows)
@@ -108,7 +178,6 @@ def _combine(chain, base, rows):
     for row in rows:
         for key, value in (row["tx_types"] or {}).items():
             types[key] = types.get(key, 0) + value
-    window_seconds = sum(r["window_seconds"] or 0 for r in rows) or None
     addresses = None
     # Addresses are not deduped across blocks; do not sum unique counts.
     if len(rows) == 1:
@@ -139,7 +208,14 @@ def _combine(chain, base, rows):
         }
         if len(rows) > 1
         else (head.get("null_reasons") or {}),
-        extra={"blocks": len(rows), "excluded_rule": "reward withdrawal txs whose messages are only distribution withdrawals"},
+        extra={
+            "blocks": len(rows),
+            "gross_tx_in_window": gross,
+            "excluded_rule": (
+                "a transaction is removed from net only when every message is a reward withdrawal, "
+                "a Terra oracle prevote/vote, or a Babylon finality signature"
+            ),
+        },
     )
 
 
@@ -174,16 +250,14 @@ def _sample_from_block(chain, base, height, when, gross, decoded):
     for tx in decoded:
         body = ((tx.get("tx") or {}).get("body") or {})
         messages = body.get("messages") or []
-        msg_types = []
-        reward_only = True if messages else False
         for msg in messages:
             mtype = msg.get("@type") or "unknown"
-            msg_types.append(mtype)
             label = _label(mtype)
             types[label] = types.get(label, 0) + 1
-            if mtype not in REWARD_TYPES:
-                reward_only = False
-            if mtype in REWARD_TYPES:
+            if message_name(mtype) in REWARD_TYPES or message_name(mtype) in {
+                "MsgWithdrawDelegatorReward",
+                "MsgWithdrawValidatorCommission",
+            }:
                 distribution_count += 1
             if mtype in SEND_TYPES:
                 amount, native_hits, other_hits = _bank_amounts(msg, native_denom, exponent)
@@ -192,7 +266,7 @@ def _sample_from_block(chain, base, height, when, gross, decoded):
                 token_count += other_hits
             elif "MsgTransfer" in mtype:
                 token_count += 1
-        if messages and reward_only:
+        if tx_is_protocol(messages):
             excluded += 1
         fee, fee_ok = _fee(tx, native_denom, exponent)
         if fee_ok:
@@ -267,7 +341,12 @@ def _txs_at_height(base, height):
 
 
 def _label(mtype):
-    if mtype in REWARD_TYPES:
+    name = message_name(mtype)
+    if name in {"MsgAggregateExchangeRatePrevote", "MsgAggregateExchangeRateVote"}:
+        return "oracle_vote"
+    if name == "MsgAddFinalitySig":
+        return "finality_signature"
+    if name in {"MsgWithdrawDelegatorReward", "MsgWithdrawValidatorCommission"} or mtype in REWARD_TYPES:
         return "distribution_withdrawal"
     if mtype in SEND_TYPES:
         return "bank_send"
@@ -323,6 +402,12 @@ def _fee(tx, native_denom, exponent):
         elif qty:
             ok = False
     return native, ok
+
+
+def _iso_seconds(value):
+    if not value:
+        return None
+    return datetime.fromisoformat(value.replace("Z", "+00:00")).timestamp()
 
 
 def _parse_time(value):
