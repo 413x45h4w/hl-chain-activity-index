@@ -90,7 +90,7 @@ Airdrops that look like ordinary contract calls are not separable. They stay ins
 
 **Token transfer counts** are ERC-20 `Transfer` logs when receipts are available, TRC-10 transfers, Algorand asset transfers, and XRPL token payments. Heterogeneous token amounts are not converted to USD.
 
-**Fees** are the execution fees the source reports (EVM effective gas price, mempool.space `totalFees`, XRPL fees, and so on). USD uses the Hyperliquid mid of the gas token. If that mid does not exist, USD is null. USDC is the Hyperliquid quote: when gas is USDC and `allMids` has no USDC row, the price is 1 because mids are already in USDC.
+**Fees** are the execution fees the source reports (EVM effective gas price, mempool.space `totalFees`, Solana `meta.fee`, Tron `net_fee` plus `energy_fee`, XRPL fees, and so on). Solana's 60-second transaction sample does not include fees, so the fee column uses the measured span of the blocks whose fees were summed. USD uses the Hyperliquid mid of the gas token. If that mid does not exist, USD is null. USDC is the Hyperliquid quote: when gas is USDC and `allMids` has no USDC row, the price is 1 because mids are already in USDC. A blank fee means the source did not provide one. A zero is a measured zero.
 
 **Active addresses** are unique senders and receivers in the inspected window. The ranking uses address intensity (addresses in the window, per minute). That is not a deduped daily active user count.
 
