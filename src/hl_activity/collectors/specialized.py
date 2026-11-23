@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 
+from ..emissions import attach_emissions
 from ..http_util import HttpError, json_rpc, request_json
 from .common import blank, failure, hex_int, iso_from_unix, now_iso
 
@@ -281,7 +282,7 @@ def collect_tron(chain):
     ts = included[0]["header"].get("timestamp") if included else None
     observed = iso_from_unix(ts / 1000) if ts else None
     number = included[0]["number"] if included else head_num
-    return [
+    rows = [
         blank(
             chain,
             sample_kind="window",
@@ -311,6 +312,28 @@ def collect_tron(chain):
             },
         )
     ]
+    _attach_tron_emissions(rows[0], root, len(included), window)
+    return rows
+
+
+def _attach_tron_emissions(sample, root, block_count, window):
+    try:
+        payload = request_json(f"{root}/wallet/getchainparameters", method="POST", body={}, timeout=20)
+        params = {item.get("key"): item.get("value") for item in payload.get("chainParameter") or []}
+        producer = params.get("getWitnessPayPerBlock")
+        voters = params.get("getWitness127PayPerBlock")
+        if producer is None or voters is None:
+            raise ValueError("witness pay parameters missing")
+        trx_per_block = (int(producer) + int(voters)) / 1_000_000
+    except Exception as exc:
+        sample.setdefault("null_reasons", {})["emissions_native"] = f"tron witness pay unavailable: {exc}"
+        return
+    attach_emissions(
+        sample,
+        trx_per_block * block_count,
+        window,
+        "getWitnessPayPerBlock plus getWitness127PayPerBlock, from getChainParameters",
+    )
 
 
 @_reg("aptos")

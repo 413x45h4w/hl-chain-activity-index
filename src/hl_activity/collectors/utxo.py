@@ -7,6 +7,7 @@ so native transfer value stays null.
 
 from __future__ import annotations
 
+from ..emissions import attach_emissions
 from ..http_util import HttpError, request_json
 from .common import blank, failure, iso_from_unix, now_iso
 
@@ -48,7 +49,7 @@ def collect_utxo_mempool(chain):
             blank(
                 chain,
                 sample_kind="window" if index == 0 else "block",
-                sample_key=f"{chain['id']}:block:{block.get('height')}",
+                sample_key=f"{chain['id']}:block:{block.get('height')}:sub",
                 observed_at=iso_from_unix(ts),
                 window_seconds=window,
                 head_height=str(block.get("height")),
@@ -77,6 +78,13 @@ def collect_utxo_mempool(chain):
                 },
             )
         )
+        if subsidy is not None and window:
+            attach_emissions(
+                rows[-1],
+                subsidy,
+                window,
+                "block subsidy = coinbase reward minus fees",
+            )
     if not rows:
         return [failure(chain, "no non-stale blocks")]
     # The newest block is the ranking window. Older blocks stay as history.
@@ -158,7 +166,7 @@ def collect_utxo_blockchair(chain):
             blank(
                 chain,
                 sample_kind="window" if index == 0 else "block",
-                sample_key=f"{chain['id']}:block:{block.get('id')}",
+                sample_key=f"{chain['id']}:block:{block.get('id')}:gen",
                 observed_at=observed,
                 window_seconds=window,
                 head_height=str(block.get("id")),
@@ -168,17 +176,19 @@ def collect_utxo_blockchair(chain):
                 net_tx_count=(gross - 1) if gross else None,
                 distribution_count=1 if gross else None,
                 fee_native=(fee / divisor) if fee is not None else None,
+                emissions_native=(block["generation"] / divisor) if block.get("generation") is not None else None,
                 tx_types={"coinbase": 1, "non_coinbase": (gross - 1) if gross else None},
                 null_reasons={
                     "window_seconds": "blockchair blocks list does not include a reliable parent interval here; per-minute rate needs the next run to compare timestamps and is left null when only one block is the ranking window without a computed delta",
                     "native_transfer_value": "output totals include change",
                     "token_transfer_count": "not available",
                     "active_addresses": "not available",
-                    "distribution_value_native": "generation amount is not taken from this list because the field is chain-specific and was not verified",
                     "minute_level": chain.get("minute_note"),
                 },
             )
         )
+        if block.get("generation") is None:
+            rows[-1]["null_reasons"]["emissions_native"] = "blockchair block had no generation field"
     # Fill windows from successive timestamps now that rows exist.
     times = []
     for block in data:
@@ -193,6 +203,10 @@ def collect_utxo_blockchair(chain):
             if delta > 0:
                 row["window_seconds"] = delta
                 row["null_reasons"].pop("window_seconds", None)
+                if row.get("emissions_native") is not None:
+                    row.setdefault("extra", {})["emissions_window_seconds"] = delta
+                    row["extra"]["emissions_basis"] = "blockchair generation, new coins excluding fees"
+                    row["null_reasons"].pop("emissions_native", None)
     return rows
 
 

@@ -144,6 +144,20 @@ class RankTests(unittest.TestCase):
         )
         self.assertAlmostEqual(bundle["fee_usd_per_min"], 4.0)
 
+    def test_nev_is_fees_minus_emissions_and_stays_blank_when_either_is_missing(self):
+        both = metric_bundle(
+            {
+                "window_seconds": 60,
+                "fee_usd": 10,
+                "emissions_usd": 4,
+            }
+        )
+        self.assertAlmostEqual(both["nev_usd_per_min"], 6)
+        missing = metric_bundle({"window_seconds": 60, "fee_usd": 10, "emissions_usd": None})
+        self.assertIsNone(missing["nev_usd_per_min"])
+        zero_issuance = metric_bundle({"window_seconds": 60, "fee_usd": 10, "emissions_usd": 0})
+        self.assertAlmostEqual(zero_issuance["nev_usd_per_min"], 10)
+
     def test_append_only_ignores_duplicate_sample_key(self):
         with tempfile.TemporaryDirectory() as tmp:
             conn = connect(Path(tmp) / "activity.sqlite")

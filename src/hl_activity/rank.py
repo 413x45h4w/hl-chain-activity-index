@@ -80,6 +80,20 @@ def _num(value):
     return number
 
 
+def _prefer(new, current):
+    if current is None:
+        return True
+    new_time = new.get("observed_at") or ""
+    current_time = current.get("observed_at") or ""
+    if new_time != current_time:
+        return new_time > current_time
+    new_window = _num(new.get("window_seconds")) or 0
+    current_window = _num(current.get("window_seconds")) or 0
+    if new_window != current_window:
+        return new_window > current_window
+    return new.get("emissions_usd") is not None and current.get("emissions_usd") is None
+
+
 def select_latest_windows(rows):
     """Newest window-kind sample per chain. Block rows are chart history."""
     chosen = {}
@@ -87,16 +101,12 @@ def select_latest_windows(rows):
         if row.get("sample_kind") not in ("window", "live"):
             continue
         chain_id = row["chain_id"]
-        current = chosen.get(chain_id)
-        if current is None or (row.get("observed_at") or "") >= (current.get("observed_at") or ""):
-            if current is not None and row.get("observed_at") == current.get("observed_at"):
-                if _num(row.get("window_seconds")) or 0 < _num(current.get("window_seconds")) or 0:
-                    continue
+        if _prefer(row, chosen.get(chain_id)):
             chosen[chain_id] = row
     return chosen
 
 
-def _fee_window_seconds(row):
+def _extra(row):
     extra = row.get("extra_json")
     if extra is None:
         extra = row.get("extra")
@@ -104,10 +114,8 @@ def _fee_window_seconds(row):
         try:
             extra = json.loads(extra)
         except json.JSONDecodeError:
-            return None
-    if isinstance(extra, dict):
-        return _num(extra.get("fee_window_seconds"))
-    return None
+            return {}
+    return extra if isinstance(extra, dict) else {}
 
 
 def metric_bundle(row):
@@ -122,7 +130,14 @@ def metric_bundle(row):
     net_transfer_usd = transfer_usd if transfer_is_net else None
     addresses = _num(row.get("active_addresses"))
     fees_usd = _num(row.get("fee_usd"))
-    fee_window = _fee_window_seconds(row) or window
+    extra = _extra(row)
+    fee_window = _num(extra.get("fee_window_seconds")) or window
+    emissions_window = _num(extra.get("emissions_window_seconds")) or window
+    emissions_usd_per_min = per_minute(_num(row.get("emissions_usd")), emissions_window)
+    fee_usd_per_min = per_minute(fees_usd, fee_window)
+    nev_usd_per_min = None
+    if fee_usd_per_min is not None and emissions_usd_per_min is not None:
+        nev_usd_per_min = fee_usd_per_min - emissions_usd_per_min
     return {
         "gross_tx_per_min": per_minute(gross, window),
         "excluded_tx_per_min": per_minute(excluded, window),
@@ -130,7 +145,9 @@ def metric_bundle(row):
         "gross_native_transfer_usd_per_min": per_minute(transfer_usd, window),
         "net_native_transfer_usd_per_min": per_minute(net_transfer_usd, window),
         "address_intensity_per_min": per_minute(addresses, window),
-        "fee_usd_per_min": per_minute(fees_usd, fee_window),
+        "fee_usd_per_min": fee_usd_per_min,
+        "emissions_usd_per_min": emissions_usd_per_min,
+        "nev_usd_per_min": nev_usd_per_min,
         "distribution_per_min": per_minute(_num(row.get("distribution_count")), window),
         "distribution_usd_per_min": per_minute(_num(row.get("distribution_value_usd")), window),
         "token_transfer_per_min": per_minute(_num(row.get("token_transfer_count")), window),

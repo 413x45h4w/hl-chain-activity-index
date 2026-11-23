@@ -39,6 +39,8 @@ def _history(rows):
                 "gross_tx_per_min": metrics["gross_tx_per_min"],
                 "net_tx_per_min": metrics["net_tx_per_min"],
                 "fee_usd_per_min": metrics["fee_usd_per_min"],
+                "emissions_usd_per_min": metrics["emissions_usd_per_min"],
+                "nev_usd_per_min": metrics["nev_usd_per_min"],
                 "tx_types": row.get("tx_types_json") or {},
                 "null_reasons": row.get("null_reasons_json") or {},
                 "lag_seconds": row.get("lag_seconds"),
@@ -317,11 +319,13 @@ function metricCells(row) {
     <td>${fmt(m.net_native_transfer_usd_per_min, 0)}</td>
     <td>${fmt(m.address_intensity_per_min, 1)}</td>
     <td>${fmt(m.fee_usd_per_min, 2)}</td>
+    <td>${fmt(m.emissions_usd_per_min, 2)}</td>
+    <td class="${m.nev_usd_per_min == null ? "" : (m.nev_usd_per_min < 0 ? "neg" : "pos")}">${fmt(m.nev_usd_per_min, 2)}</td>
     <td>${fmt(row.window_seconds, 0)}s</td>
     <td>${lag}</td>
     <td>${(row.components_used || []).length || 0}/3</td>`;
 }
-const head = `<tr><th>Rank</th><th>Chain</th><th>Index</th><th>Net tx/min</th><th>Gross tx/min</th><th>Excluded/min</th><th>Net native USD/min</th><th>Addr intensity</th><th>Fee USD/min</th><th>Window</th><th>Lag</th><th>Parts</th><th>Coins</th></tr>`;
+const head = `<tr><th>Rank</th><th>Chain</th><th>Index</th><th>Net tx/min</th><th>Gross tx/min</th><th>Excluded/min</th><th>Net native USD/min</th><th>Addr intensity</th><th>Fee USD/min</th><th>Emissions USD/min</th><th>NEV USD/min</th><th>Window</th><th>Lag</th><th>Parts</th><th>Coins</th></tr>`;
 const board = document.getElementById("board");
 board.innerHTML = head + DATA.ranked.map(row => `<tr class="row" data-id="${row.chain_id}">
   <td>${row.rank}</td><td class="name">${row.name}</td><td>${fmt(row.composite, 1)}</td>
