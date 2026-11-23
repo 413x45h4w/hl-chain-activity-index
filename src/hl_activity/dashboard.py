@@ -290,7 +290,15 @@ HTML = r"""<!DOCTYPE html>
 <script id="payload" type="application/json">__DATA__</script>
 <script>
 const DATA = JSON.parse(document.getElementById("payload").textContent);
-const fmt = (n, d=1) => n === null || n === undefined || Number.isNaN(n) ? "—" : Number(n).toLocaleString(undefined, {maximumFractionDigits: d});
+const fmt = (n, d=1) => {
+  if (n === null || n === undefined || Number.isNaN(Number(n))) return "—";
+  const value = Number(n);
+  if (value === 0) return "0";
+  const abs = Math.abs(value);
+  const digits = abs < 0.01 ? 2 : d;
+  if (abs < 0.01) return value.toLocaleString(undefined, {maximumSignificantDigits: digits});
+  return value.toLocaleString(undefined, {maximumFractionDigits: digits});
+};
 const stats = document.getElementById("stats");
 const c = DATA.counts;
 stats.innerHTML = [

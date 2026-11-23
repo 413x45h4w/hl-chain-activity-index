@@ -186,54 +186,110 @@ def _cardano_time(value):
     return text
 
 
+def _tron_root(url):
+    marker = "/wallet/"
+    if marker in url:
+        return url.split(marker, 1)[0]
+    return url.rstrip("/")
+
+
+def _tron_fee_sun(info):
+    """User-paid TRX fees. Energy and bandwidth totals are units, not sun."""
+    total = 0
+    for item in info or []:
+        receipt = item.get("receipt") or {}
+        total += int(receipt.get("net_fee") or 0)
+        total += int(receipt.get("energy_fee") or 0)
+    return total
+
+
 @_reg("tron")
 def collect_tron(chain):
     url = _endpoint(chain) or "https://api.trongrid.io/wallet/getnowblock"
+    root = _tron_root(url)
     try:
-        block = request_json(url, method="POST", body={}, timeout=20)
+        head = request_json(f"{root}/wallet/getnowblock", method="POST", body={}, timeout=20)
     except HttpError as exc:
         return [failure(chain, str(exc))]
-    header = (block or {}).get("block_header", {}).get("raw_data", {})
-    txs = block.get("transactions") or []
+    head_num = ((head or {}).get("block_header") or {}).get("raw_data", {}).get("number")
+    if head_num is None:
+        return [failure(chain, "tron block had no number")]
+    # About 30 seconds. The oldest block is a timestamp anchor only.
+    fetched = []
+    for offset in range(10):
+        number = head_num - offset
+        try:
+            if offset == 0:
+                block = head
+            else:
+                block = request_json(f"{root}/wallet/getblockbynum", method="POST", body={"num": number}, timeout=20)
+            info = request_json(
+                f"{root}/wallet/gettransactioninfobyblocknum",
+                method="POST",
+                body={"num": number},
+                timeout=25,
+            )
+        except HttpError as exc:
+            if offset == 0:
+                return [failure(chain, str(exc))]
+            break
+        header = ((block or {}).get("block_header") or {}).get("raw_data", {})
+        fetched.append({"number": number, "header": header, "txs": (block or {}).get("transactions") or [], "info": info or []})
+        if len(fetched) >= 2:
+            newest = fetched[0]["header"].get("timestamp")
+            oldest = fetched[-1]["header"].get("timestamp")
+            if newest and oldest and (newest - oldest) >= 24_000:
+                break
+    if len(fetched) < 2:
+        included = fetched
+        window = None
+    else:
+        included = fetched[:-1]
+        window = (included[0]["header"]["timestamp"] - fetched[-1]["header"]["timestamp"]) / 1000
+        if window <= 0:
+            window = None
     types = {}
     excluded = 0
     native = 0
     native_value = 0.0
     token = 0
     addresses = set()
-    for tx in txs:
-        contracts = ((tx.get("raw_data") or {}).get("contract")) or []
-        labels = []
-        for contract in contracts:
-            ctype = contract.get("type") or "unknown"
-            labels.append(ctype)
-            types[ctype] = types.get(ctype, 0) + 1
-            value = ((contract.get("parameter") or {}).get("value") or {})
-            if value.get("owner_address"):
-                addresses.add(value["owner_address"])
-            if value.get("to_address"):
-                addresses.add(value["to_address"])
-            if ctype == "TransferContract":
-                native += 1
-                native_value += int(value.get("amount") or 0) / 1_000_000
-            elif ctype in ("TransferAssetContract", "TriggerSmartContract"):
-                if ctype == "TransferAssetContract":
+    gross = 0
+    fee_sun = 0
+    for item in included:
+        fee_sun += _tron_fee_sun(item["info"])
+        for tx in item["txs"]:
+            gross += 1
+            contracts = ((tx.get("raw_data") or {}).get("contract")) or []
+            labels = []
+            for contract in contracts:
+                ctype = contract.get("type") or "unknown"
+                labels.append(ctype)
+                types[ctype] = types.get(ctype, 0) + 1
+                value = ((contract.get("parameter") or {}).get("value") or {})
+                if value.get("owner_address"):
+                    addresses.add(value["owner_address"])
+                if value.get("to_address"):
+                    addresses.add(value["to_address"])
+                if ctype == "TransferContract":
+                    native += 1
+                    native_value += int(value.get("amount") or 0) / 1_000_000
+                elif ctype == "TransferAssetContract":
                     token += 1
-        if labels and all(label == "WithdrawBalanceContract" for label in labels):
-            excluded += 1
-    ts = header.get("timestamp")
+            if labels and all(label == "WithdrawBalanceContract" for label in labels):
+                excluded += 1
+    ts = included[0]["header"].get("timestamp") if included else None
     observed = iso_from_unix(ts / 1000) if ts else None
-    number = header.get("number")
-    gross = len(txs)
+    number = included[0]["number"] if included else head_num
     return [
         blank(
             chain,
             sample_kind="window",
             sample_key=f"{chain['id']}:block:{number}",
             observed_at=observed,
-            window_seconds=3,
+            window_seconds=window,
             head_height=str(number),
-            source=url,
+            source=root,
             gross_tx_count=gross,
             excluded_tx_count=excluded,
             net_tx_count=gross - excluded,
@@ -243,13 +299,16 @@ def collect_tron(chain):
             token_transfer_count=token,
             distribution_count=excluded,
             active_addresses=len(addresses),
+            fee_native=fee_sun / 1_000_000,
             tx_types=types,
             null_reasons={
-                "fee_native": "getnowblock does not include receipt fees",
                 "token_transfer_count": "TRC-20 transfers inside TriggerSmartContract are not decoded; only TRC-10 TransferAssetContract is counted",
-                "window_seconds": "Tron block interval is treated as the protocol 3s target; this is the chain parameter, not a measured parent delta",
             },
-            extra={"excluded_rule": "WithdrawBalanceContract reward claims"},
+            extra={
+                "excluded_rule": "WithdrawBalanceContract reward claims",
+                "blocks": len(included),
+                "fee_window_seconds": window,
+            },
         )
     ]
 
@@ -531,7 +590,7 @@ def collect_stellar(chain):
                 gross_tx_count=total,
                 excluded_tx_count=0,
                 net_tx_count=total,
-                fee_native=(int(ledger["total_fees"]) / 10_000_000) if ledger.get("total_fees") is not None else None,
+                fee_native=_stellar_fee(base, ledger.get("sequence")) if index == 0 else None,
                 tx_types={
                     "successful": gross,
                     "failed": failed,
@@ -542,10 +601,41 @@ def collect_stellar(chain):
                     "token_transfer_count": "not in the ledger summary",
                     "active_addresses": "not in the ledger summary",
                     "distributions": "inflation is disabled on Stellar; no reward tx class is in this summary",
+                    "fee_native": None if index == 0 else "fee_charged is summed for the newest ledger only",
                 },
             )
         )
+    if rows and rows[0].get("fee_native") is None:
+        rows[0]["null_reasons"]["fee_native"] = "Horizon ledger has no total_fees field and the transaction list did not return fee_charged"
+    elif rows:
+        rows[0]["null_reasons"].pop("fee_native", None)
+        rows[0].setdefault("extra", {})
+        rows[0]["extra"]["fee_window_seconds"] = rows[0].get("window_seconds")
     return rows
+
+
+def _stellar_fee(base, sequence):
+    """Sum fee_charged. Horizon no longer puts total_fees on the ledger."""
+    if sequence is None:
+        return None
+    total = 0
+    url = f"{base}/ledgers/{sequence}/transactions?limit=200&order=asc"
+    pages = 0
+    while url and pages < 6:
+        pages += 1
+        try:
+            payload = request_json(url, timeout=20)
+        except HttpError:
+            return None
+        records = ((payload or {}).get("_embedded") or {}).get("records") or []
+        for tx in records:
+            if tx.get("fee_charged") is None:
+                continue
+            total += int(tx["fee_charged"])
+        if len(records) < 200:
+            break
+        url = (((payload or {}).get("_links") or {}).get("next") or {}).get("href")
+    return total / 10_000_000
 
 
 @_reg("hedera")

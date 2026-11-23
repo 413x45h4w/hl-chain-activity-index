@@ -22,6 +22,7 @@ usable component are listed as unranked.
 
 from __future__ import annotations
 
+import json
 import math
 import statistics
 
@@ -95,6 +96,20 @@ def select_latest_windows(rows):
     return chosen
 
 
+def _fee_window_seconds(row):
+    extra = row.get("extra_json")
+    if extra is None:
+        extra = row.get("extra")
+    if isinstance(extra, str):
+        try:
+            extra = json.loads(extra)
+        except json.JSONDecodeError:
+            return None
+    if isinstance(extra, dict):
+        return _num(extra.get("fee_window_seconds"))
+    return None
+
+
 def metric_bundle(row):
     window = _num(row.get("window_seconds"))
     gross = _num(row.get("gross_tx_count"))
@@ -107,6 +122,7 @@ def metric_bundle(row):
     net_transfer_usd = transfer_usd if transfer_is_net else None
     addresses = _num(row.get("active_addresses"))
     fees_usd = _num(row.get("fee_usd"))
+    fee_window = _fee_window_seconds(row) or window
     return {
         "gross_tx_per_min": per_minute(gross, window),
         "excluded_tx_per_min": per_minute(excluded, window),
@@ -114,7 +130,7 @@ def metric_bundle(row):
         "gross_native_transfer_usd_per_min": per_minute(transfer_usd, window),
         "net_native_transfer_usd_per_min": per_minute(net_transfer_usd, window),
         "address_intensity_per_min": per_minute(addresses, window),
-        "fee_usd_per_min": per_minute(fees_usd, window),
+        "fee_usd_per_min": per_minute(fees_usd, fee_window),
         "distribution_per_min": per_minute(_num(row.get("distribution_count")), window),
         "distribution_usd_per_min": per_minute(_num(row.get("distribution_value_usd")), window),
         "token_transfer_per_min": per_minute(_num(row.get("token_transfer_count")), window),
