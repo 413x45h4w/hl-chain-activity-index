@@ -16,6 +16,7 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 
+from ..emissions import attach_annual
 from ..http_util import HttpError, request_json
 from .common import blank, failure
 
@@ -52,6 +53,23 @@ def collect_cosmos(chain):
         except Exception as exc:
             last_error = f"{type(exc).__name__}: {exc}"
     return [failure(chain, last_error or "cosmos LCD failed")]
+
+
+def _attach_mint(sample, base, chain):
+    try:
+        payload = request_json(f"{base}/cosmos/mint/v1beta1/annual_provisions", timeout=15)
+        annual_raw = float(payload["annual_provisions"])
+    except Exception as exc:
+        sample.setdefault("null_reasons", {})["emissions_native"] = f"mint annual_provisions unavailable: {exc}"
+        return
+    exponent = int(chain.get("native_exponent") or 6)
+    annual = annual_raw / (10 ** exponent)
+    attach_annual(
+        sample,
+        annual,
+        sample.get("window_seconds"),
+        "cosmos mint annual_provisions, in the chain's native denom",
+    )
 
 
 def message_name(mtype):
@@ -159,6 +177,7 @@ def _from_lcd(chain, base):
             sample["distribution_count"] = None
         rows.append(sample)
     window = _combine(chain, base, rows, window_seconds)
+    _attach_mint(window, base, chain)
     for row in rows:
         row["sample_kind"] = "block"
     return [window] + rows

@@ -11,6 +11,7 @@ from __future__ import annotations
 
 from datetime import datetime, timedelta, timezone
 
+from ..emissions import attach_annual
 from ..http_util import HttpError, first_success, json_rpc
 from .common import blank, failure
 
@@ -91,7 +92,34 @@ def collect_solana(chain):
             rows[0]["fee_native"] = fee_native
             rows[0]["extra"]["fee_window_seconds"] = fee_window
             rows[0]["null_reasons"].pop("fee_native", None)
+        _attach_inflation(rows[0], endpoints, timeout, fee_window)
     return rows
+
+
+def _attach_inflation(sample, endpoints, timeout, fee_window):
+    last_error = "no RPC"
+    for url in endpoints:
+        try:
+            rate = json_rpc(url, "getInflationRate", [], timeout=timeout)
+            supply = json_rpc(
+                url,
+                "getSupply",
+                [{"excludeNonCirculatingAccountsList": True}],
+                timeout=timeout,
+            )
+            total_sol = (supply.get("value") or supply)["total"] / 1_000_000_000
+            annual = total_sol * float(rate["total"])
+        except Exception as exc:
+            last_error = str(exc)
+            continue
+        attach_annual(
+            sample,
+            annual,
+            fee_window,
+            "getInflationRate.total times getSupply.total, the protocol inflation schedule",
+        )
+        return
+    sample.setdefault("null_reasons", {})["emissions_native"] = f"inflation rate unavailable: {last_error}"
 
 
 def _recent_fees(url, timeout):

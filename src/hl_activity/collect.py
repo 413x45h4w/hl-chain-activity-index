@@ -16,7 +16,20 @@ from .storage import connect, insert_activity, insert_price, insert_run, utc_now
 NUMERAIRE = "USDC"
 
 
-def priced(chain, mids, delisted):
+def k_prefix_prices(universe, mids):
+    """Price a gas asset from its k-prefix Hyperliquid market, which is 1000 units."""
+    out = {}
+    for coin in universe.get("coins") or []:
+        underlying = coin.get("underlying")
+        multiplier = coin.get("multiplier")
+        ticker = coin.get("ticker")
+        if not underlying or not multiplier or ticker not in mids:
+            continue
+        out[underlying] = (mids[ticker] / float(multiplier), ticker)
+    return out
+
+
+def priced(chain, mids, delisted, wrapped=None):
     ticker = chain.get("gas_ticker")
     if not ticker:
         return None, None, None
@@ -27,11 +40,14 @@ def priced(chain, mids, delisted):
         return mids[ticker], ticker, source
     if ticker == NUMERAIRE:
         return 1.0, ticker, "hl_quote_numeraire"
+    if wrapped and ticker in wrapped:
+        mid, source_ticker = wrapped[ticker]
+        return mid, source_ticker, "hyperliquid_allMids_k_prefix"
     return None, ticker, None
 
 
-def apply_prices(sample, chain, mids, delisted):
-    price, ticker, source = priced(chain, mids, delisted)
+def apply_prices(sample, chain, mids, delisted, wrapped=None):
+    price, ticker, source = priced(chain, mids, delisted, wrapped)
     reasons = dict(sample.get("null_reasons") or {})
     sample["price_ticker"] = ticker
     sample["price_usd"] = price
@@ -41,9 +57,14 @@ def apply_prices(sample, chain, mids, delisted):
             reasons["fee_usd"] = f"no Hyperliquid mid for gas ticker {ticker}"
             reasons["native_transfer_value_usd"] = reasons["fee_usd"]
             reasons["distribution_value_usd"] = reasons["fee_usd"]
+            if sample.get("emissions_native") not in (None, 0, 0.0):
+                reasons["emissions_usd"] = reasons["fee_usd"]
+            elif sample.get("emissions_native") in (0, 0.0):
+                sample["emissions_usd"] = 0.0
         else:
             reasons["fee_usd"] = "chain has no gas ticker mapped to a Hyperliquid market"
             reasons["native_transfer_value_usd"] = reasons["fee_usd"]
+            reasons["emissions_usd"] = reasons["fee_usd"]
     else:
         if sample.get("fee_native") is not None:
             sample["fee_usd"] = sample["fee_native"] * price
@@ -62,6 +83,13 @@ def apply_prices(sample, chain, mids, delisted):
             reasons.setdefault(
                 "distribution_value_usd",
                 reasons.get("distribution_value_native", "distribution value was not collected"),
+            )
+        if sample.get("emissions_native") is not None:
+            sample["emissions_usd"] = sample["emissions_native"] * price
+        else:
+            reasons.setdefault(
+                "emissions_usd",
+                reasons.get("emissions_native", "protocol emissions were not collected"),
             )
     if not sample.get("native_transfer_is_net"):
         reasons.setdefault(
@@ -91,6 +119,7 @@ def collect_once(workers=12):
     live = {c["name"] for c in meta["coins"]}
     new_tickers = sorted(live - known)
     delisted = {c["name"] for c in meta["coins"] if c["is_delisted"]}
+    wrapped = k_prefix_prices(universe, mids)
     targets = _targets(universe, chains, meta)
     missing_chain_cfg = [
         c["chain_id"]
@@ -110,7 +139,7 @@ def collect_once(workers=12):
                 errors.append({"chain_id": chain["id"], "error": str(exc)})
                 continue
             for row in rows:
-                samples.append(apply_prices(row, chain, mids, delisted))
+                samples.append(apply_prices(row, chain, mids, delisted, wrapped))
 
     conn = connect()
     inserted = 0

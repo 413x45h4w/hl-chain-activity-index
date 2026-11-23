@@ -38,6 +38,8 @@ ACTIVITY_COLUMNS = [
     "distribution_count",
     "distribution_value_native",
     "distribution_value_usd",
+    "emissions_native",
+    "emissions_usd",
     "active_addresses",
     "fee_native",
     "fee_usd",
@@ -79,6 +81,8 @@ def connect(path=DB_PATH):
             distribution_count REAL,
             distribution_value_native REAL,
             distribution_value_usd REAL,
+            emissions_native REAL,
+            emissions_usd REAL,
             active_addresses REAL,
             fee_native REAL,
             fee_usd REAL,
@@ -108,6 +112,10 @@ def connect(path=DB_PATH):
         );
         """
     )
+    existing = {row[1] for row in conn.execute("PRAGMA table_info(activity)")}
+    for column in ("emissions_native", "emissions_usd"):
+        if column not in existing:
+            conn.execute(f"ALTER TABLE activity ADD COLUMN {column} REAL")
     return conn
 
 
@@ -123,6 +131,11 @@ def _history_dir(conn, kind):
 def _append_csv(directory, day, row, fieldnames):
     directory.mkdir(parents=True, exist_ok=True)
     path = directory / f"{day}.csv"
+    if path.exists():
+        with path.open(encoding="utf-8") as handle:
+            header = handle.readline().strip().split(",")
+        if header != list(fieldnames):
+            path = directory / f"{day}.v2.csv"
     new_file = not path.exists()
     with open(path, "a", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=fieldnames)

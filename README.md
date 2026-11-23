@@ -90,7 +90,11 @@ Airdrops that look like ordinary contract calls are not separable. They stay ins
 
 **Token transfer counts** are ERC-20 `Transfer` logs when receipts are available, TRC-10 transfers, Algorand asset transfers, and XRPL token payments. Heterogeneous token amounts are not converted to USD.
 
-**Fees** are the execution fees the source reports (EVM effective gas price, mempool.space `totalFees`, Solana `meta.fee`, Tron `net_fee` plus `energy_fee`, XRPL fees, and so on). Solana's 60-second transaction sample does not include fees, so the fee column uses the measured span of the blocks whose fees were summed. USD uses the Hyperliquid mid of the gas token. If that mid does not exist, USD is null. USDC is the Hyperliquid quote: when gas is USDC and `allMids` has no USDC row, the price is 1 because mids are already in USDC. A blank fee means the source did not provide one. A zero is a measured zero.
+**Fees** are the execution fees the source reports (EVM effective gas price, mempool.space `totalFees`, Solana `meta.fee`, Tron `net_fee` plus `energy_fee`, XRPL fees, and so on). Solana's 60-second transaction sample does not include fees, so the fee column uses the measured span of the blocks whose fees were summed. USD uses the Hyperliquid mid of the gas token. If that mid does not exist, USD is null. USDC is the Hyperliquid quote: when gas is USDC and `allMids` has no USDC row, the price is 1 because mids are already in USDC. A k-prefix market prices the underlying at the mid divided by 1000, so LUNC uses the kLUNC mid. A blank fee means the source did not provide one. A zero is a measured zero.
+
+**Emissions/min** is the USD value of new gas-token units the protocol creates per minute. Bitcoin-like chains use the block subsidy (coinbase reward minus fees). Solana uses `getInflationRate` times total supply. Cosmos chains use the mint module's `annual_provisions`. Tron uses `getWitnessPayPerBlock` plus `getWitness127PayPerBlock`. Rollups that spend ETH or USDC as gas and do not mint it are recorded as zero. Ethereum beacon issuance is not in the execution block, so Ethereum emissions and NEV stay blank.
+
+**NEV/min** is fees per minute minus emissions per minute. It is blank when either input is blank. A negative NEV means the chain is issuing more new coins than users pay in fees.
 
 **Active addresses** are unique senders and receivers in the inspected window. The ranking uses address intensity (addresses in the window, per minute). That is not a deduped daily active user count.
 

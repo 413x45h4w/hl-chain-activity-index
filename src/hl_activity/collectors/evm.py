@@ -9,10 +9,25 @@ inside net; that limit is recorded on the sample.
 
 from __future__ import annotations
 
+from ..emissions import attach_emissions
 from ..http_util import HttpError, first_success, json_rpc
 from .common import blank, failure, hex_int, iso_from_unix
 
 TRANSFER_TOPIC = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
+# These chains take ETH or another already-issued asset as gas. They do not mint it.
+NO_NATIVE_MINT = {
+    "arbitrum",
+    "optimism",
+    "base",
+    "zksync",
+    "linea",
+    "scroll",
+    "blast",
+    "manta",
+    "megaeth",
+    "robinhood",
+    "arc",
+}
 SYSTEM_TYPES = {"0x7e"}
 WEI = 10**18
 
@@ -211,8 +226,8 @@ def collect_evm(chain):
         native_transfer_value=native_value / WEI,
         native_transfer_is_net=1,
         token_transfer_count=token_transfers if token_known else None,
-        distribution_count=0,
-        distribution_value_native=0.0,
+        distribution_count=None,
+        distribution_value_native=None,
         active_addresses=len(addresses),
         fee_native=(fee_wei / WEI) if fee_known else None,
         tx_types=type_totals,
@@ -226,6 +241,13 @@ def collect_evm(chain):
     if window is None or window <= 0:
         sample["null_reasons"]["window_seconds"] = "parent block timestamp missing, so a per-minute rate cannot be computed"
         sample["window_seconds"] = None
+    if chain["id"] in NO_NATIVE_MINT:
+        span = sample.get("window_seconds") or 60.0
+        attach_emissions(sample, 0.0, span, "this chain does not mint its gas token")
+    else:
+        sample["null_reasons"]["emissions_native"] = (
+            "gas-token issuance is not in the execution block and was not read from another feed"
+        )
     return [sample] + header_samples
 
 
