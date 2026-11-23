@@ -134,6 +134,16 @@ class RankTests(unittest.TestCase):
         self.assertAlmostEqual(bundle["net_tx_per_min"], 90)
         self.assertAlmostEqual(bundle["excluded_tx_per_min"], 10)
 
+    def test_fee_rate_uses_the_fee_window_not_the_tx_window(self):
+        bundle = metric_bundle(
+            {
+                "window_seconds": 60,
+                "fee_usd": 1.0,
+                "extra": {"fee_window_seconds": 15},
+            }
+        )
+        self.assertAlmostEqual(bundle["fee_usd_per_min"], 4.0)
+
     def test_append_only_ignores_duplicate_sample_key(self):
         with tempfile.TemporaryDirectory() as tmp:
             conn = connect(Path(tmp) / "activity.sqlite")
